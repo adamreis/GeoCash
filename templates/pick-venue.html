@@ -95,10 +95,12 @@
 							var LatLngArray = new Array();
 
 							for(var i=0; i<obj.response.venues.length; i++){
+								//get the ith venue from the JSON response
 								var venue = obj.response.venues[i];
 
-								var crossStreet = venue.location.crossStreet;
-								dataHTML += "<a href=\"http://www.google.com\"><div class=\"btn btn-select-venue\">" + venue.name;
+								//build the search results
+								dataHTML += "<a href=\"index.html?venue_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
+								//some venues don't have address or cross street, so avoid "undefined"
 								if(venue.location.address) {
 									dataHTML += " - " + venue.location.address;
 								}
@@ -107,7 +109,7 @@
 								}
 								dataHTML += "</div></a><br><br>";
 
-
+								//build point on map
 								var lat = venue.location.lat;
 								var lng = venue.location.lng;
 								var latlng = L.LatLng(lat, lng);
@@ -120,7 +122,9 @@
 
 								
 							}
+							//set all data in search results
 							$(".data-holder").html(dataHTML);
+							
 							//console.log(LatLngArray);
 							map.setBounds(L.LatLngBounds(LatLngArray));
 							//map.setView([10, -0.53], 13);
