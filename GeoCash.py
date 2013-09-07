@@ -46,8 +46,10 @@ def new_user():
 	# return foursq_access_token_base_url+urllib.urlencode(args)
 	user_access_token = requests.get(foursq_access_token_base_url+urllib.urlencode(args)).json()['access_token']
 	
+	print 'ACCESS TOKEN: '+user_access_token
+	return foursq_get_user_id_base_url+'oauth_token='+user_access_token
 
-	return 'user info: '+requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token).json()
+	# return 'user info: '+requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token).json()
 
 
 
