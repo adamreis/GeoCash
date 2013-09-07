@@ -21,9 +21,8 @@ new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 
 @app.route('/')
 def index():
-	print 'test point 1'
+
 	if '4sqid' in session:
-		print 'shouldn\'t be here'
 		return redirect(url_for('home'))
 	else:
 		args = {'client_id':FOURSQUARE_CLIENT_ID,
@@ -31,7 +30,6 @@ def index():
 				'redirect_uri':new_user_redirect_uri}
 
 		auth_url = foursq_grant_access_base_url+urllib.urlencode(args)
-		print 'this is the auth url.  we havent crashed yet: '+auth_url
 		return render_template('index.html', foursquare_auth_url=auth_url)
 
 @app.route('/newuser/')
@@ -51,16 +49,25 @@ def new_user():
 
 	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
 	user_id = response['response']['user']['id']
-	return 'user id: '+user_id
 
+	session['4sqid']=user_id
+	session['4sqtoken']=user_access_token
+#TODO: add them to our database of users
+
+	return redirect(url_for('home'))
 
 @app.route('/home/', methods=['GET'])
 def home():
 	if '4sqid' not in session:
 		return redirect(url_for('index'))
 
+	return render_template('home.html')
 
-
+@app.route('/logout/', methods=['GET'])
+def logout():
+	session.pop('4sqid', None)
+	session.pop('4sqtoken', None)
+	return redirect(url_for('index'))
 
 @app.route('/push/', methods=['POST'])
 def dummy_push():
