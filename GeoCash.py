@@ -42,10 +42,10 @@ def new_user():
 		   'grant_type':'authorization_code', 
 		 'redirect_uri':home_redirect_uri,
 		 'code':code}
+	return foursq_access_token_base_url+urllib.urlencode(args)
+	# token = json.loads(requests.get(foursq_access_token_base_url+urllib.urlencode(args)))['access_token']
 
-	token = json.loads(requests.get(foursq_access_token_base_url+urllib.urlencode(args)))['access_token']
-
-	return 'TOKEN: '+token
+	# return 'TOKEN: '+token
 
 
 @app.route('/home/', methods=['GET'])
