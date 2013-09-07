@@ -52,6 +52,7 @@ def new_user():
 
 	session['4sqid']=user_id
 	session['4sqtoken']=user_access_token
+	print 'Logged in!'
 #TODO: add them to our database of users
 
 	return redirect(url_for('home'))
@@ -67,6 +68,7 @@ def home():
 def logout():
 	session.pop('4sqid', None)
 	session.pop('4sqtoken', None)
+	print 'Logged out!'
 	return redirect(url_for('index'))
 
 @app.route('/push/', methods=['POST'])
