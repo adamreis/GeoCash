@@ -20,6 +20,7 @@ def index():
 				'redirect_uri':new_user_redirect_uri}
 
 		auth_url = foursq_grant_access_base_url+urllib.urlencode(args)
+		print 'this is the auth url.  we havent crashed yet: '+auth_url
 		return render_template('index.html', foursquare_auth_url=auth_url)
 
 @app.route('/newuser/')
