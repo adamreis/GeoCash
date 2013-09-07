@@ -6204,6 +6204,12 @@ a.badge:focus {
 #sendgrid-logo{
 	height: 40px;
 }
+#mongodb-logo{
+	height: 45px;
+}
+.error-holder{
+	color: #f00;
+}
 .form-signin {
     max-width: 800px;
     padding: 19px 29px 29px;
@@ -6220,4 +6226,7 @@ a.badge:focus {
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
     margin-bottom: 10px;
+}
+.btn-select-venue {
+	color: #3f94d0;
 }
