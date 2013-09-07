@@ -1,0 +1,1 @@
+web: gunicorn GeoCash:app
