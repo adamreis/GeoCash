@@ -49,8 +49,9 @@ def new_user():
 	print 'ACCESS TOKEN: '+user_access_token
 	# return foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907'
 
-	return str(requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json())
-
+	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
+	user_id = response['response']['user']['id']
+	return 'user id: '+user_id
 
 
 @app.route('/home/', methods=['GET'])
