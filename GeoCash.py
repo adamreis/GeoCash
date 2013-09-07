@@ -12,7 +12,9 @@ new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 
 @app.route('/')
 def index():
+	print 'test point 1'
 	if '4sqid' in session:
+		print 'shouldn\'t be here'
 		return redirect(url_for('home'))
 	else:
 		args = {'client_id':FOURSQUARE_CLIENT_ID,
