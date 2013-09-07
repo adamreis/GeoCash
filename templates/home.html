@@ -4,8 +4,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<title>GeoCash</title>
+
+	<!-- include Leaflet CSS and JavaScript files -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+	 <!--[if lte IE 8]>
+	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+	 <![endif]-->
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 </head>
 <body>
 
@@ -69,6 +76,43 @@
 			});
 		});
 		</script>
+		</div>
+	</div>
+
+	<!--The Map!-->
+	<style>
+		#map { height: 180px; }
+	</style>
+	<div class="row">
+		<div class="span12">
+			<div id="map"></div>
+			<script src="../dist/leaflet.js"></script>
+	<script>
+
+		var map = L.map('map').setView([51.505, -0.09], 13);
+
+		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+		}).addTo(map);
+
+
+		L.marker([51.5, -0.09]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+
+	</script>
+
 		</div>
 	</div>
 	
