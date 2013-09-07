@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ def main_page():
 @app.route('/push/', methods=['post'])
 def dummy_push():
 	print 'request:'
-	# print request
+	print request
 	return '200 OK'
 
 
