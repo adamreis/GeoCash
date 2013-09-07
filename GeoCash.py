@@ -43,9 +43,8 @@ def new_user():
 		 'redirect_uri':home_redirect_uri,
 		 'code':code}
 	# return foursq_access_token_base_url+urllib.urlencode(args)
-	# token = json.loads(requests.get(foursq_access_token_base_url+urllib.urlencode(args)))['access_token']
+	return requests.get(foursq_access_token_base_url+urllib.urlencode(args))
 
-	return 'TOKEN: '
 
 
 @app.route('/home/', methods=['GET'])
