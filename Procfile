@@ -1,1 +1,1 @@
-web: python GeoCash.py
+web: gunicorn GeoCash:app
