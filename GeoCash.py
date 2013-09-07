@@ -63,7 +63,18 @@ def new_user():
 	session['4sqid']=user_id
 	session['4sqtoken']=user_access_token
 	print 'Logged in!'
-#TODO: add them to our database of users
+	
+	existing_user = user_collection.find_one({'4sq_id':user_id})
+	
+	if not existing_user:
+		# add user to database
+		user = {'4sq_id':user_id, 
+			 '4sq_token':user_access_token, 
+			  'venmo_id':None, 
+		   'venmo_token':None,
+		   'pending_gifts':[]}
+
+		user_collection.insert(user)
 
 	return redirect(url_for('home'))
 
@@ -74,6 +85,10 @@ def home():
 
 	if '4sqid' not in session:
 		return redirect(url_for('index'))
+
+	#if venmo isn't connected
+	if not user_collection.find_one({'4sq_id':session['4sqid']})['venmo_id']:
+		return render_template('venmo-login.html')
 
 	return render_template('home.html')
 
@@ -107,8 +122,6 @@ def mongo_connect():
 
 	user_collection = db.users
 	pending_gift_collection = db.pending_gifts
-	test_data = {'one plus one':'two', 'two plus two':'four'}
-	pending_gift_collection.insert(test_data)
 	mongo_connected = True
 
 # app.wsgi_app = ProxyFix(app.wsgi_app)
