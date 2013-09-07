@@ -110,7 +110,7 @@
 
 								var lat = venue.location.lat;
 								var lng = venue.location.lng;
-								var latlng = L.LatLng(lat, lng);
+								var latlng = new L.LatLng(lat, lng);
 								var arrayLength = LatLngArray.push(latlng);	
 								var locationAddress = "";
 								if(venue.location.address){
@@ -121,8 +121,7 @@
 								
 							}
 							$(".data-holder").html(dataHTML);
-							//console.log(LatLngArray);
-							map.setBounds(L.LatLngBounds(LatLngArray));
+							map.fitBounds(LatLngArray);
 							//map.setView([10, -0.53], 13);
 						}
 				}); //end ajax
