@@ -20,19 +20,6 @@
 	<div class="row span2 offset10">
 		<a href="http://www.google.com"><div class="btn btn-primary">Log out</div></a>
 	</div>
-
-	<!--<form class="form-signin" action="home.html" method="post">
-		<h2 class="form-signin-heading">Send money</h2>
-		<label for="friend">Pick a friend</label>
-		<input type="text" name="friend" id="friend" class="input-block-level" placeholder="Pick a friend">
-		<label for="venue">Pick a place</label>
-		<input type="text" name="venue" id="venue" class="input-block-level" placeholder="Pick a place">
-		<label for="amount">Choose an amount</label>
-		<input type="text" name="amount" id="amount" class="input-block-level" placeholder="Amount">
-		<label for="note">Write a note</label>
-		<input type="text" name="note" id="note" class="input-block-level" placeholder="Note">
-		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-	</form>-->
 	
 	<!-- area for user input -->
 	<div class="row">
@@ -49,7 +36,7 @@
 	
 	<!-- search results -->
 	<div class="row">
-		<div class="span12">
+		<div class="span6">
 			<div class="error-holder">
 			</div>
 			<div class="data-holder">
@@ -109,8 +96,15 @@
 
 							for(var i=0; i<obj.response.venues.length; i++){
 								var venue = obj.response.venues[i];
-								dataHTML += "<a href=\"http://www.google.com\"><div class=\"btn btn-select-venue\">";
-								dataHTML += venue.name + " - " + venue.location.address + " " + venue.location.crossStreet;
+
+								var crossStreet = venue.location.crossStreet;
+								dataHTML += "<a href=\"http://www.google.com\"><div class=\"btn btn-select-venue\">" + venue.name;
+								if(venue.location.address) {
+									dataHTML += " - " + venue.location.address;
+								}
+								if(venue.location.crossStreet) {
+									dataHTML += " " + venue.location.crossStreet;
+								}
 								dataHTML += "</div></a><br><br>";
 
 
@@ -137,14 +131,14 @@
 		}); //end of document ready
 		</script>
 		</div>
-	</div>
 
 	<!--The Map!-->
 	<style>
-		#map { height: 180px; }
+		#map { 
+			height: 300px; 
+		}
 	</style>
-	<div class="row">
-		<div class="span12">
+		<div class="span6">
 			<div id="map"></div>
 			<script src="../dist/leaflet.js"></script>
 	<script>
