@@ -9,7 +9,7 @@ def main_page():
 @app.route('/push/', methods=['post'])
 def dummy_push():
 	print 'request:'
-	print request
+	print request.form
 	return '200 OK'
 
 
