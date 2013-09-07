@@ -98,7 +98,7 @@ def home():
 		   	   'response_type':'code'}
 
 		url = venmo_grant_access_base_url+urllib.urlencode(args)
-		return render_template('venmo-login.html', 'venmo_auth_url':url)
+		return render_template('venmo-login.html', venmo_auth_url=url)
 
 	return render_template('home.html')
 
