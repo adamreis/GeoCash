@@ -97,9 +97,8 @@ def home():
 					'scope':'make_payments', 
 		   	   'response_type':'code'}
 
-		return requests.get(venmo_grant_access_base_url+urllib.urlencode(args))
-		# return render_template('venmo-login.html')
-		return url
+		url = venmo_grant_access_base_url+urllib.urlencode(args)
+		return render_template('venmo-login.html', 'venmo_auth_url':url)
 
 	return render_template('home.html')
 
