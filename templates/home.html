@@ -28,10 +28,13 @@
 	</form>-->
 	
 	<div class="row">
-		<div class="span8">
+		<div class="span5">
 			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name">
 		</div>
-		<div class="span4">
+		<div class="span5">
+			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area">
+		</div>
+		<div class="span2">
 			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
 		</div>
 	</div>
@@ -43,7 +46,7 @@
 		$(document).ready(function(){
 			//alert("ready!");
 			$("#finditbutton").click(function(){
-			var location_url = "&near=New%20York,%20NY";
+			var location_url = "&near=" + $("#geocode").val();
 			var name_url = "&query=" + $("#venue_name").val();
 			var ajax_base_url = "https://api.foursquare.com/v2/venues/search?oauth_token=FOHYFALGXXFJYRX214AU2OEAJIT43MZTFVUHYZDE0GRHBSSS&v=20130907&limit=10";
 			var ajax_url = ajax_base_url + location_url + name_url;
