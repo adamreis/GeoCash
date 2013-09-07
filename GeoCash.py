@@ -108,7 +108,7 @@ def add_venmo_token():
 	print 'CODE: '+str(code)
 	args = {'client_id':VENMO_CLIENT_ID, 
 		'client_secret':VENMO_SECRET, 
-		 		 'code':code}
+		 		 'code':str(code)}
 
 	return venmo_access_token_base_url+urllib.urlencode(args)
 
