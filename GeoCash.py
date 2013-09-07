@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from pymongo import Connection
 # from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
 import requests
 import urllib
