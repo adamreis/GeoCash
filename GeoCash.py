@@ -7,11 +7,15 @@ import os
 app = Flask(__name__)
 
 APP_SECRET = os.environ['APP_SECRET']
-print 'app secret: '+APP_SECRET
+
 FOURSQUARE_CLIENT_ID = os.environ['FOURSQUARE_CLIENT_ID']
 FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
+MONGOHQ_USER = os.environ['MONGOHQ_USER']
+MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
 
-
+mongo_connected = False
+user_collection = None
+pending_gift_collection = None
 
 foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
@@ -21,6 +25,8 @@ new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 
 @app.route('/')
 def index():
+	if not mongo_connected:
+		mongo_connect()
 
 	if '4sqid' in session:
 		return redirect(url_for('home'))
@@ -34,6 +40,9 @@ def index():
 
 @app.route('/newuser/')
 def new_user():
+	if not mongo_connected:
+		mongo_connect()
+
 	code = request.args.get('code', '')
 	print 'CODE: '+str(code)
 	args = {'client_id':FOURSQUARE_CLIENT_ID, 
@@ -59,6 +68,9 @@ def new_user():
 
 @app.route('/home/', methods=['GET'])
 def home():
+	if not mongo_connected:
+		mongo_connect()
+
 	if '4sqid' not in session:
 		return redirect(url_for('index'))
 
@@ -73,10 +85,29 @@ def logout():
 
 @app.route('/push/', methods=['POST'])
 def dummy_push():
+	if not mongo_connected:
+		mongo_connect()
+
 	print 'request:'
 	print request.form
 	return '200 OK'
 
+def mongo_connect():
+	global mongo_connected, user_collection, pending_gift_collection
+	host = 'paulo.mongohq.com'
+	port = 10014
+	dbName = 'GeoCash'
+
+	connection = Connection(host,port)
+	db = connection[dbName]
+
+	db.authenticate(MONGOHQ_USER, MONGOHQ_PWD)
+
+	user_collection = db.users
+	pending_gift_collection = db.pending_gifts
+	test_data = {'one plus one':'two', 'two plus two':'four'}
+	pending_gift_collection.insert(test_data)
+	mongo_connected = True
 
 # app.wsgi_app = ProxyFix(app.wsgi_app)
 
