@@ -4,13 +4,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-	<title>Testing</title>
+	<title>GeoCash</title>
 </head>
 <body>
-<!-- content container -->
-<div class="container">
 	<!-- navbar -->
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<!--<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -18,19 +16,36 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="brand" href="#">Project name</a>
+				<a class="brand" href="#">GeoCash</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#about">About</a></li>
 					<li><a href="#contact">Contact</a></li>
 					</ul>
-				</div><!--/.nav-collapse -->
-			</div>
+				</div>--><!--/.nav-collapse -->
+			<!--</div>
 		</div>
-	</div> <!-- end navbar -->
+	</div>--> <!-- end navbar -->
 	
-	<form class="form-signin">
+<!-- content container -->
+
+<div class="container" id="content-container">
+	<div class="row">
+		<div class="span6 hidden-phone" id="screenshot">
+			[insert screenshot]
+		</div>
+		<div class="span6" id="homepage-logo">
+			<img src="../static/images/logo.png" style="padding: 10px;"/>
+			<h1>Share money at your favorite places.</h1>
+			<h2>It's easy - sign in with your Foursquare account to begin.</h2>
+			<a href="http://www.google.com">
+				<div class="btn btn-large" id="btn-signin">Sign in with Foursquare</div>
+			</a>
+			<p>*We never post without your permission.</p>
+		</div>
+	</div>
+	<!--<form class="form-signin">
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<input type="text" class="input-block-level" placeholder="Email address">
 		<input type="password" class="input-block-level" placeholder="Password">
@@ -38,7 +53,17 @@
 			<input type="checkbox" value="remember-me"> Remember me
 		</label>
 		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-	</form>
+	</form>-->
+	<div class="row" id="spacer100">
+	</div>
+	<div class="row">
+		<div class="span12" id="powered-by">
+		<span>Powered by &nbsp;</span>
+			<a href="http://www.foursquare.com"><img src="../static/images/foursquare-logo.png" id="foursquare-logo" /></a>
+			<span>&nbsp; and &nbsp;</span>
+			<a href="http://www.venmo.com"><img src="../static/images/venmo_logo_blue.png" id="venmo-logo" /></a>
+		</div>
+	</div>
 </div> <!-- /container -->
 
 </body>
