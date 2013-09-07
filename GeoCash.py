@@ -105,7 +105,7 @@ def home():
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
-	pass
+	return "AYOO YOU AT VENMOAUTH"
 
 @app.route('/logout/', methods=['GET'])
 def logout():
