@@ -1,9 +1,17 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
+# from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
 import requests
 import urllib
+import os
 
 app = Flask(__name__)
+
+APP_SECRET = os.environ['APP_SECRET']
+print 'app secret: '+APP_SECRET
+FOURSQUARE_CLIENT_ID = os.environ['FOURSQUARE_CLIENT_ID']
+FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
+
+
 
 foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token/?'
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate/?'
