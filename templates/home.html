@@ -7,26 +7,27 @@
 	<title>GeoCash</title>
 </head>
 <body>
-<!-- content container -->
 
 <div class="container" id="content-container">
 	<div class="row">
-		<div class="span6 hidden-phone" id="screenshot">
-			[insert screenshot]
-		</div>
-		<div class="span6" id="homepage-logo">
+		<!--<div class="span6" id="homepage-logo">
 			<img src="../static/images/logo.png" style="padding: 10px;"/>
-			<h1>Share money at your favorite places.</h1>
-			<br>
-			<h3>It's easy - sign in with your Foursquare account to begin.</h3>
-			<br>
-			<a href="venmo-login.html">
-				<div class="btn btn-large btn-primary" id="btn-signin">Sign in with Foursquare</div>
+			<h1>Woohoo! You're logged in!</h1>
+			<a href="http://www.google.com">
+				<div class="btn btn-large" id="btn-signin">Send $$$</div>
 			</a>
 			<p>*We never post without your permission.</p>
-		</div>
+		</div>-->
 	</div>
-
+	<form class="form-signin">
+		<h2 class="form-signin-heading">Send money</h2>
+		<input type="text" class="input-block-level" placeholder="Email address">
+		<input type="password" class="input-block-level" placeholder="Password">
+		<label class="checkbox">
+			<input type="checkbox" value="remember-me"> Remember me
+		</label>
+		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+	</form>
 	<div class="row" id="spacer100">
 	</div>
 	<div class="row">

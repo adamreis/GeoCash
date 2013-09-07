@@ -226,7 +226,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #333333;
+  color: /*#333333*/#444444;
   background-color: /*#ffffff*/#f5f5f5;
 }
 
@@ -6173,10 +6173,19 @@ a.badge:focus {
 #content-container {
 	margin-top: 40px;
 }
+#screenshot {
+	text-align: center;
+}
 #homepage-logo {
 	text-align: center;
 }
+#homepage-logo h3{
+	color: #555555;
+}
 #btn-signin {
+	/*color: #3f94d0;*/
+}
+#btn-signin-venmo {
 	color: #3f94d0;
 }
 #powered-by {
@@ -6191,6 +6200,9 @@ a.badge:focus {
 }
 #venmo-logo{
 	height: 30px;
+}
+#sendgrid-logo{
+	height: 40px;
 }
 .form-signin {
     max-width: 300px;
