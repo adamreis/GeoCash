@@ -5,15 +5,22 @@ import urllib
 
 app = Flask(__name__)
 
-foursq_access_base_url = 'https://foursquare.com/oauth2/access_token/?'
-redirect_uri = 'https://geocash.herokuapp.com/home/'
+foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token/?'
+foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate/?'
+home_redirect_uri = 'https://geocash.herokuapp.com/home/'
+new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 
 @app.route('/')
 def index():
 	if '4sqid' in session:
 		return redirect(url_for('home'))
 	else:
-	# return render_template('index.html')
+		args = {'client_id':FOURSQUARE_CLIENT_ID,
+				'response_type':'code',
+				'redirect_uri':new_user_redirect_uri}
+
+		auth_url = foursq_grant_access_base_url+urllib.urlencode(args)
+		return render_template('index.html', foursquare_auth_url=auth_url)
 
 @app.route('/newuser/')
 def new_user():
@@ -22,10 +29,10 @@ def new_user():
 	args = {'client_id':FOURSQUARE_CLIENT_ID, 
 		'client_secret':FOURSQUARE_CLIENT_SECRET, 
 		   'grant_type':'authorization_code', 
-		 'redirect_uri':redirect_uri,
+		 'redirect_uri':home_redirect_uri,
 		 'code':code}
 
-	token = json.loads(requests.get(foursq_access_base_url+urllib.urlencode(args)))['access_token']
+	token = json.loads(requests.get(foursq_access_token_base_url+urllib.urlencode(args)))['access_token']
 
 	return 'TOKEN: '+token
 
