@@ -16,7 +16,7 @@ FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
 foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
 home_redirect_uri = 'https://geocash.herokuapp.com/home/'
-new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
+new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser'
 
 @app.route('/')
 def index():
