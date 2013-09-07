@@ -105,12 +105,13 @@ def home():
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
 	code = str(request.args.get('code', ''))
-	print 'CODE: '+str(code)
+	print 'CODE: '+code
+
 	args = {'client_id':VENMO_CLIENT_ID, 
 		'client_secret':VENMO_SECRET, 
-		 		 'code':str(code)}
-
-	return venmo_access_token_base_url+urllib.urlencode(args)
+		 		 'code':code}
+	return args
+	# return venmo_access_token_base_url+urllib.urlencode(args)
 
 	# user_venmo_access_token = requests.get(venmo_access_token_base_url+urllib.urlencode(args)).json()
 	
