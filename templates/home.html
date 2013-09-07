@@ -4,30 +4,74 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<title>GeoCash</title>
 </head>
 <body>
 
 <div class="container" id="content-container">
-	<div class="row">
-		<!--<div class="span6" id="homepage-logo">
-			<img src="../static/images/logo.png" style="padding: 10px;"/>
-			<h1>Woohoo! You're logged in!</h1>
-			<a href="http://www.google.com">
-				<div class="btn btn-large" id="btn-signin">Send $$$</div>
-			</a>
-			<p>*We never post without your permission.</p>
-		</div>-->
+	<div class="row span2 offset10">
+		<a href="http://www.google.com"><div class="btn btn-primary">Log out</div></a>
 	</div>
-	<form class="form-signin">
+
+	<!--<form class="form-signin" action="home.html" method="post">
 		<h2 class="form-signin-heading">Send money</h2>
-		<input type="text" class="input-block-level" placeholder="Email address">
-		<input type="password" class="input-block-level" placeholder="Password">
-		<label class="checkbox">
-			<input type="checkbox" value="remember-me"> Remember me
-		</label>
+		<label for="friend">Pick a friend</label>
+		<input type="text" name="friend" id="friend" class="input-block-level" placeholder="Pick a friend">
+		<label for="venue">Pick a place</label>
+		<input type="text" name="venue" id="venue" class="input-block-level" placeholder="Pick a place">
+		<label for="amount">Choose an amount</label>
+		<input type="text" name="amount" id="amount" class="input-block-level" placeholder="Amount">
+		<label for="note">Write a note</label>
+		<input type="text" name="note" id="note" class="input-block-level" placeholder="Note">
 		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-	</form>
+	</form>-->
+	
+	<div class="row">
+		<div class="span5">
+			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name">
+		</div>
+		<div class="span5">
+			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area">
+		</div>
+		<div class="span2">
+			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<div class="data-holder">
+			</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			//alert("ready!");
+			$("#finditbutton").click(function(){
+			var location_url = "&near=" + $("#geocode").val();
+			var name_url = "&query=" + $("#venue_name").val();
+			var ajax_base_url = "https://api.foursquare.com/v2/venues/search?oauth_token=FOHYFALGXXFJYRX214AU2OEAJIT43MZTFVUHYZDE0GRHBSSS&v=20130907&limit=10";
+			var ajax_url = ajax_base_url + location_url + name_url;
+			
+			
+			$.ajax({
+				  url: ajax_url,
+				  beforeSend: function ( xhr ) {
+					xhr.overrideMimeType("text/plain; charset=x-user-defined");
+				  }
+				}).done(function ( data ) {
+				  if( console && console.log ) {
+					console.log("Sample of data:", data.slice(0, 100));
+				  }
+				  //alert(data);
+				  $(".data-holder").html(data);
+				  var obj = jQuery.parseJSON(data);
+				  console.log(obj);	
+			});
+			});
+		});
+		</script>
+		</div>
+	</div>
+	
 	<div class="row" id="spacer100">
 	</div>
 	<div class="row">
@@ -43,4 +87,5 @@
 </div> <!-- /container -->
 
 </body>
+
 </html>
