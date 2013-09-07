@@ -93,6 +93,7 @@ def dummy_push():
 	return '200 OK'
 
 def mongo_connect():
+	print 'mongo connect called'
 	global mongo_connected, user_collection, pending_gift_collection
 	host = 'paulo.mongohq.com'
 	port = 10014
@@ -115,4 +116,4 @@ app.secret_key = APP_SECRET
 
 
 if __name__ == '__main__':
-	app.run(port=7777,debug=True)
+	app.run(port=5000,debug=True)
