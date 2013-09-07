@@ -42,8 +42,8 @@ def new_user():
 		   'grant_type':'authorization_code', 
 		 'redirect_uri':home_redirect_uri,
 		 'code':code}
-	return foursq_access_token_base_url+urllib.urlencode(args)
-	# return requests.get(foursq_access_token_base_url+urllib.urlencode(args))
+	# return foursq_access_token_base_url+urllib.urlencode(args)
+	return 'access token: '+requests.get(foursq_access_token_base_url+urllib.urlencode(args)).json()['access_token']
 
 
 
