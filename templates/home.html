@@ -9,6 +9,9 @@
 <body>
 
 <div class="container" id="content-container">
+	<div class="row span2 offset10">
+		<a href="http://www.google.com"><div class="btn btn-primary">Log out</div></a>
+	</div>
 	<div class="row">
 		<!--<div class="span6" id="homepage-logo">
 			<img src="../static/images/logo.png" style="padding: 10px;"/>
@@ -19,14 +22,17 @@
 			<p>*We never post without your permission.</p>
 		</div>-->
 	</div>
-	<form class="form-signin">
+	<form class="form-signin" action="home.html" method="post">
 		<h2 class="form-signin-heading">Send money</h2>
-		<input type="text" class="input-block-level" placeholder="Email address">
-		<input type="password" class="input-block-level" placeholder="Password">
-		<label class="checkbox">
-			<input type="checkbox" value="remember-me"> Remember me
-		</label>
-		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+		<!--<label for="friend">Pick a friend</label>
+		<input type="text" name="friend" id="friend" class="input-block-level" placeholder="Pick a friend">-->
+		<label for="venue">Pick a place</label>
+		<input type="text" name="venue" id="venue" class="input-block-level" placeholder="Pick a place">
+		<!--<label for="amount">Choose an amount</label>
+		<input type="text" name="amount" id="amount" class="input-block-level" placeholder="Amount">
+		<label for="note">Write a note</label>
+		<input type="text" name="note" id="note" class="input-block-level" placeholder="Note">
+		<button class="btn btn-large btn-primary" type="submit">Sign in</button>-->
 	</form>
 	<div class="row" id="spacer100">
 	</div>
@@ -43,4 +49,10 @@
 </div> <!-- /container -->
 
 </body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//alert("ready!");
+});
+</script>
 </html>
