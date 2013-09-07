@@ -11,6 +11,8 @@ APP_SECRET = os.environ['APP_SECRET']
 
 FOURSQUARE_CLIENT_ID = os.environ['FOURSQUARE_CLIENT_ID']
 FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
+VENMO_CLIENT_ID = os.environ['VENMO_CLIENT_ID']
+VENMO_CLIENT_SECRET = os.environ['VENMO_CLIENT_SECRET']
 MONGOHQ_USER = os.environ['MONGOHQ_USER']
 MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
 
@@ -18,11 +20,14 @@ mongo_connected = False
 user_collection = None
 pending_gift_collection = None
 
-foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
+foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_get_user_id_base_url = 'https://api.foursquare.com/v2/users/self?'
 home_redirect_uri = 'https://geocash.herokuapp.com/home/'
 new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
+add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
+venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
+
 
 @app.route('/')
 def index():
@@ -88,9 +93,19 @@ def home():
 
 	#if venmo isn't connected
 	if not user_collection.find_one({'4sq_id':session['4sqid']})['venmo_id']:
-		return render_template('venmo-login.html')
+		args = {'client_id':VENMO_CLIENT_ID, 
+					'scope':'make_payments', 
+		   	   'response_type':'code'}
+
+		url = venmo_grant_access_base_url+urllib.urlencode(args)
+		# return render_template('venmo-login.html')
+		return url
 
 	return render_template('home.html')
+
+@app.route('/venmoauth/', methods=['GET'])
+def add_venmo_token():
+	pass
 
 @app.route('/logout/', methods=['GET'])
 def logout():
