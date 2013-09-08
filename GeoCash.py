@@ -293,13 +293,24 @@ def dummy_push():
 		print 'recip 4sq token: '+recip_4sq_token
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
-		print 'contact: '
-		print response['response']['user']['contact']
+		recip_email = response['response']['user']['contact']['email']
 
+		note = gift_to_process['note']
+		amount = gift_to_process['amount']
 
-		# initiate_payment()
+		initiate_payment(sender_venmo_token, recip_email, note, amount)
 
 	print 'gift to process: '+str(gift_to_process)
+
+def initiate_paymennt(sender_token, recip_email, note, amount):
+	data = {
+		'access_token':sender_token,
+		'email':recip_email,
+		'note':note,
+		'amount':amount
+	}
+	url = 'https://api.venmo.com/payments'
+	response = requests.post(url,data)
 
 def mongo_connect():
 	print 'mongo connect called'
