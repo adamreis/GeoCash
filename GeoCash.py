@@ -285,6 +285,20 @@ def dummy_push():
 	print 'venue id: '+venue_id
 	gift_to_process = pending_gift_collection.find_one({'recipient_id':recip_id,'venue_id':venue_id})
 
+	if(gift_to_process):
+		sender_venmo_token = user_collection.find_one({'4sq_id':gift_to_process['sender_id']})['venmo_token']
+		print 'sender venmo token: '+str(sender_venmo_token)
+
+		recip_4sq_token = user_collection.find_one({'4sq_id':recip_id})['4sq_token']
+		print 'recip 4sq token: '+recip_4sq_token
+
+		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907')
+		print 'contact: '
+		print response['response']['user']['contact']
+
+
+		# initiate_payment()
+
 	print 'gift to process: '+str(gift_to_process)
 
 def mongo_connect():
