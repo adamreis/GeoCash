@@ -26,7 +26,7 @@
 <div class="container" id="content-container">
 	<div class="row" id="spacer40">
 	</div>
-	<form action="/add_pending_payment" method="post">	
+
 	<div class="row">
 		<label for="pay_amt" class="span1 offset5">Amount $</label>
 		<div class="span1">
@@ -48,18 +48,34 @@
 		<textarea name="comments" id="comments" maxlength="2000" style="color:black; width: 400px; height: 60px;" placeholder=""></textarea><br />
 		</div>
 	</div>
-	<div class="row" style="text-align:center">
-		<div class="span12">
-			<input type="submit" name="submit" value="Send Gift">
+	<div class="row">
+		<div class="span12" style="text-align:center">
+			<div class="btn btn-primary	" id="button">Send gift</div>
 		</div>
 	</div>
+
 	<div class="row">
 		&nbsp;
 	</div>
+
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//alert("READY!");
+		$("#button").click(function(){
+			var message = $("#message").val();
+			var amount = $("#pay_amt").val();
+			var new_url = "http://geocash.herokuapp.com/add_pending_payment?note=" + message + "&amount=" + amount;
+			//alert(new_url);
+			window.location = new_url;
+		});
+	});
+	</script>
+
+
 	<div class="row" style="text-align:center">
 		<label for="comments" class="span12">Your Venmo account will get charged when your friend checks in at the venue you chose.<br>Don't worry - if your friend never checks in there, you don't have to pay!</label>
 	</div>
-	</form>
 	
 	<div class="row" id="spacer100">
 	</div>
@@ -72,7 +88,7 @@
 			<span>&nbsp; &nbsp;</span>
 			<a href="http://www.sendgrid.com"><img src="../static/images/sendgrid-logo.png" id="sendgrid-logo" /></a>
 			<span>&nbsp; &nbsp;</span>
-			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-logo.png" id="mongodb-logo" /></a>
+			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-powered-button.png" id="mongodb-logo" /></a>
 		</div>
 	</div>
 </div> <!-- /container -->

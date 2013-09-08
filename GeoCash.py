@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from pymongo import Connection
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 # from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
 import requests
 import urllib
 import os
+import smtplib
 # from jinja import Template, Context, FileSystemLoader
 from jinja2 import Environment, PackageLoader
 env = Environment(loader=PackageLoader('GeoCash', 'templates'))
@@ -33,6 +36,8 @@ new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
 venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
 venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
+
+from_email = 'GetGeoCash@gmail.com'
 
 @app.route('/')
 def index():
@@ -68,10 +73,15 @@ def new_user():
 	# return foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907'
 
 	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
+	
+	firstname =  str(response['response']['user']['firstName'])
+	lastname = str(response['response']['user']['lastName'])
+
 	user_id = response['response']['user']['id']
 
 	session['4sqid']=user_id
 	session['4sqtoken']=user_access_token
+	session['user_name']=firstname+''+lastname
 	print 'Logged in!'
 	
 	existing_user = user_collection.find_one({'4sq_id':user_id})
@@ -96,6 +106,9 @@ def home():
 	if '4sqid' not in session:
 		return redirect(url_for('index'))
 
+	# if 'user_name' not in session:
+
+
 	#if venmo isn't connected
 	if not user_collection.find_one({'4sq_id':session['4sqid']})['venmo_id']:
 		args = {'client_id':VENMO_CLIENT_ID, 
@@ -118,32 +131,105 @@ def home():
 	else:
 		return render_template('create-payment.html')
 
-@app.route('/add_friend/',methods=['POST'])
+@app.route('/add_friend',methods=['GET'])
 def add_friend():
-	friend_email = request.args.get('friend_email', '')
+	friend_id = request.args.get('friend_4sq_id', '')
 	friend_name = request.args.get('friend_name', '')
-	session['friend_email']=friend_email
+	friend_email = request.args.get('friend_email','')
+
+	session['friend_4sq_id']=friend_id
 	session['friend_name']=friend_name
+	session['friend_email']=friend_email
 	return redirect(url_for('home'))
 
-@app.route('/add_venue/',methods=['POST'])
+@app.route('/add_venue/',methods=['GET'])
 def add_venue():
 	venue_id = request.args.get('venue_id', '')
 	session['chosen_venue']=venue_id
 	return redirect(url_for('home'))
 
-@app.route('/add_pending_payment/', methods=['POST'])
+@app.route('/add_pending_payment/', methods=['GET'])
 def add_pending_payment():
+	
 	note = request.args.get('note', '')
+	
 	amount = request.args.get('amount', '')
 
-	payment_info ='NEW PAYMENT:\n'+session['friend_name']+
-					'\n'+session['friend_email']+'\n'+
-					session['chosen_venue']+'\n'+note+'\n'+amount
+	
+	payment_info= 'NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+' '+session['chosen_venue']+'  '+note+' '+amount
 
-	return payment_info
+	pending_payment = {'recipient_id':session['friend_4sq_id'], 
+						  'sender_id':session['4sqid'],
+						   'venue_id':session['chosen_venue'],
+						   'amount':amount,
+						   'note':note}
 
+	pending_gift_collection.insert(pending_payment)
 
+	print 'test point 0'
+	send_notification_email(session['user_name'],session['friend_name'],session['friend_email'], session['chosen_venue'], note, amount)
+
+	session.pop('chosen_venue', None)
+	session.pop('friend_4sq_id', None)
+	session.pop('friend_name', None)
+	session.pop('user_name', None)
+	session.pop('friend_email',None)
+	
+	print 'test point 6'
+	return redirect(url_for('home'))
+
+def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
+	msg = MIMEMultipart('alternative')
+	msg['Subject'] = "You've received a GeoCash from a Foursquare friend!"
+	msg['From'] = from_email
+	msg['To'] = recipient_email
+	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'?oauth_token='+session['4sqtoken']+'&v=20130907').json()
+	venue_name = venue_response['response']['venue']['name']
+	print 'test point .9'
+	text = "Hi " + toName + ",\n Your \
+		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
+		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
+		to authenticate GeoCash with Foursquare so you can claim the payment on Venmo when you \
+		check in there.\n Authenticating will let GeoCash know when you check in at a place \
+		where a friend has left you a payment. Once you check in on Foursquare, we'll pass \
+		along " +sender_name + "'s gift on Venmo.\n"
+	print 'test point .93'
+	html = """\n
+		<html>
+			<head></head>
+			<body>
+				Hi %s,<br>
+				Your friend %s sent you a GeoCash gift!<br>
+				It's waiting for you at %s.<br>
+				<p style="font-size:large;">%s: <b>%s</b></p>
+				Click <a target="_blank" href="http://www.geoca.sh/">here</a> to let GeoCash know
+				when you check in at a place where a friend has left you a payment. Once
+				you check in on <a target="_blank" href="http://www.foursquare.com>Foursquare</a>, we'll
+				pass along %s's gift on <a target="_blank" href="http://www.venmo.com">
+				Venmo</a>.<br>
+			</body>
+		</html>
+		""" %(toName, sender_name, venue_name, sender_name, note, sender_name)
+	print 'test point .96'
+	# Login creds
+	username = 'GeoCash'
+	password = "pennappscolumbia1"
+
+	# Record the MIME types of both part - text/plain and text/html
+	part1 = MIMEText(text, 'plain')
+	part2 = MIMEText(html, 'html')
+	print 'test point 1'
+	# Attach parts into message container
+	msg.attach(part1)
+	msg.attach(part2)
+	print 'test point 2'
+	s = smtplib.SMTP('smtp.sendgrid.net', 587)
+	s.login(username, password)
+	print 'test point 3'
+	s.sendmail(from_email, recipient_email, msg.as_string())
+	print 'test point 4'
+	s.quit()
+	print 'test point 5'
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
@@ -175,6 +261,12 @@ def add_venmo_token():
 def logout():
 	session.pop('4sqid', None)
 	session.pop('4sqtoken', None)
+	session.pop('chosen_venue', None)
+	session.pop('friend_4sq_id', None)
+	session.pop('friend_name', None)
+	session.pop('user_name', None)
+	session.pop('friend_email',None)
+
 	print 'Logged out!'
 	return redirect(url_for('index'))
 
