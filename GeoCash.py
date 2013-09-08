@@ -9,7 +9,9 @@ import os
 import smtplib
 # from jinja import Template, Context, FileSystemLoader
 from jinja2 import Environment, PackageLoader
+from werkzeug import ImmutableMultiDict
 env = Environment(loader=PackageLoader('GeoCash', 'templates'))
+
 
 app = Flask(__name__)
 
@@ -276,7 +278,12 @@ def dummy_push():
 		mongo_connect()
 
 	print 'request:'
-	print request.form
+	recip_id = json.loads(request.form['user'])['id']
+	print 'id: '+recip_id
+
+	venue_id = json.loads(request.form['checkin'])['venue']['id']
+	print 'venue id: '+venue_id
+
 	return '200 OK'
 
 def mongo_connect():
