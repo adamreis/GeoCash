@@ -91,15 +91,12 @@
 							//alert(obj.response.venues[0].name);
 							var dataHTML = "";
 
-							//create parray that will hold lat/lng pairs
-							var LatLngArray = new Array();
-
 							for(var i=0; i<obj.response.venues.length; i++){
 								//get the ith venue from the JSON response
 								var venue = obj.response.venues[i];
 
 								//build the search results
-								dataHTML += "<a href=\"create-payment.html?venue_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
+								dataHTML += "<a href=\"pick-venue.html?friend_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
 								//some venues don't have address or cross street, so avoid "undefined"
 								if(venue.location.address) {
 									dataHTML += " - " + venue.location.address;
@@ -108,28 +105,11 @@
 									dataHTML += " " + venue.location.crossStreet;
 								}
 								dataHTML += "</div></a><br><br>";
-
-								//build point on map
-								var lat = venue.location.lat;
-								var lng = venue.location.lng;
-								var latlng = new L.LatLng(lat, lng);
-								var arrayLength = LatLngArray.push(latlng);	
-								var locationAddress = "";
-								if(venue.location.address){
-									locationAddress = venue.location.address;
-								}	
-								L.marker([lat, lng]).addTo(map).bindPopup("<b>" + venue.name + "</b><br/>" + locationAddress);
-
-								
+							
 							}
 							//set all data in search results
 							$(".data-holder").html(dataHTML);
-							
-							//console.log(LatLngArray);
-							map.fitBounds(LatLngArray);
-							//map.setView([10, -0.53], 13);
-							
-							//alert(document.URL);
+
 						}
 				}); //end ajax
 			} // end of search & population (no errors to start)
@@ -137,41 +117,6 @@
 		}); //end of document ready
 		</script>
 		</div>
-
-	<!--The Map!-->
-	<style>
-		#map { 
-			height: 300px; 
-		}
-	</style>
-		<div class="span6">
-			<div id="map"></div>
-			<script src="../dist/leaflet.js"></script>
-	<script>
-
-		var map = L.map('map').setView([51.505, -0.09], 13);
-
-		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
-
-
-		L.marker([51.5, -0.09]).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.");
-
-		var popup = L.popup();
-
-		/*function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(map);
-		}
-
-		map.on('click', onMapClick);*/
-
-	</script>
 
 		</div>
 	</div>
