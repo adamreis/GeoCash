@@ -137,7 +137,7 @@ def add_pending_payment():
 	note = request.args.get('note', '')
 	amount = request.args.get('amount', '')
 
-	payment_info ='NEW PAYMENT:\n'+session['friend_name']+'\n'+session['friend_email']+'\n'+session['chosen_venue']+'\n'+note+'\n'+amount
+	payment_info ='NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
 
 	return payment_info
 
