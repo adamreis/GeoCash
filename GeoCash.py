@@ -156,7 +156,12 @@ def add_pending_payment():
 	amount = request.args.get('amount', '')
 	print 'test point 000.2'
 	
-	print 'NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
+	print 'NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+' '+session['chosen_venue']+'  '+note+' '+amount
+
+	print session['friend_4sq_id']
+	print 'test point 000.3'
+	print session['4sq_id']
+	print 'test point 000.4'
 
 	pending_payment = {'recipient_id':session['friend_4sq_id'], 
 						  'sender_id':session['4sq_id'],
