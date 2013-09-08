@@ -5,6 +5,7 @@ from email.mime.text import MIMEText
 # from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
 import requests
 import urllib
+import json
 import os
 import smtplib
 # from jinja import Template, Context, FileSystemLoader
