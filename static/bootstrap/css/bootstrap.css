@@ -6170,8 +6170,29 @@ a.badge:focus {
 #spacer100 {
 	height: 100px;
 }
+#spacer40 {
+	height: 40px;
+}
 #content-container {
-	margin-top: 40px;
+	margin-top: 20px;
+}
+#topnavbar {
+	/*padding: 10px;*/
+	background-color: #333;
+}
+#logo {
+	float: left;
+	margin-left: 20%;
+}
+#logo img{
+	height: 50px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+#logout {
+	float: right;
+	margin-right: 20%;
+	margin-top: 10px;
 }
 #screenshot {
 	text-align: center;
@@ -6207,6 +6228,9 @@ a.badge:focus {
 #mongodb-logo{
 	height: 45px;
 }
+#foursquare-logo:hover, #venmo-logo:hover, #sendgrid-logo:hover, #mongodb-logo:hover{
+	opacity: 0.5;
+}
 .error-holder{
 	color: #f00;
 }
@@ -6229,4 +6253,11 @@ a.badge:focus {
 }
 .btn-select-venue {
 	color: #3f94d0;
+}
+label {
+	color: #444444;
+	font: normal 14px sans-serif !important;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;*/
 }

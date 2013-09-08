@@ -15,37 +15,54 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 </head>
 <body>
-
-<div class="container" id="content-container">
-	<div class="row span2 offset10">
-		<a href="https://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+<div class="row" id="topnavbar">
+	<div id="logo">
+		<a href="http://geocash.herokuapp.com/"><img src="../static/images/logo.png" /></a>
 	</div>
-	
+	<div id="logout">
+		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+	</div>
+</div>
+<div class="container" id="content-container">
+	<div class="row" id="spacer40">
+	</div>
 	<!-- area for user input -->
 	<div class="row">
-		<div class="span5">
-			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name">
+		<div class="span6">
+			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name (Starbucks; Philly cheesesteaks...)">
 		</div>
-		<div class="span5">
-			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area">
+		<div class="span3">
+			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area (New York; Chicago, IL...)">
 		</div>
 		<div class="span2">
 			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
 		</div>
 	</div>
-	
 	<!-- search results -->
 	<div class="row">
 		<div class="span6">
 			<div class="error-holder">
 			</div>
 			<div class="data-holder">
+				<span style="color: #ccc">Search for something!</span>
 			</div>
 		<!-- custom javascript to dynamically populate search results -->
 		<script type="text/javascript">
 		//On document ready, wait for button click
 		$(document).ready(function(){
-		//when submit button is clicked, begin error checking and searching
+			//allow user to hit enter from either text box
+			$("#geocode").keyup(function(event){
+				if(event.keyCode == 13) {
+					$("#finditbutton").click();
+				}
+			});
+			$("#venue_name").keyup(function(event){
+				if(event.keyCode == 13) {
+					$("#finditbutton").click();
+				}
+			});
+			
+		//when submit button is clicked (or enter hit), begin error checking and searching
 		$("#finditbutton").click(function(){
 		
 			//error checking first - must have venue name and geocode
@@ -56,6 +73,9 @@
 				error += "Please give an area within which to search (e.g. New York or 90210 or Chicago, IL).";
 			//set error to hold either "" or new error(s)
 			$(".error-holder").html(error);
+			
+			var dataHTML = "";
+			$(".data-holder").html(dataHTML);
 
 			//if no errors, run the search and populate results
 			if(error == "") {
@@ -143,12 +163,13 @@
 	<!--The Map!-->
 	<style>
 		#map { 
-			height: 300px; 
+			height: 480px;
+			margin-top: 20px; 
 		}
 	</style>
 		<div class="span6">
 			<div id="map"></div>
-			<script src="../dist/leaflet.js"></script>
+			<!--<script src="../dist/leaflet.js"></script>-->
 	<script>
 
 		var map = L.map('map').setView([40.77, -73.9597], 11);
@@ -158,7 +179,7 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(map);
 
-
+		//Not a mistake - just for fun
 		L.marker([51.5, -0.09]).addTo(map)
 			.bindPopup("<b>Hello world!</b><br />I am a popup.");
 
@@ -189,7 +210,7 @@
 			<span>&nbsp; &nbsp;</span>
 			<a href="http://www.sendgrid.com"><img src="../static/images/sendgrid-logo.png" id="sendgrid-logo" /></a>
 			<span>&nbsp; &nbsp;</span>
-			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-logo.png" id="mongodb-logo" /></a>
+			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-powered-button.png" id="mongodb-logo" /></a>
 		</div>
 	</div>
 </div> <!-- /container -->

@@ -15,25 +15,30 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 </head>
 <body>
-
-<div class="container" id="content-container">
-	<div class="row span2 offset10">
-		<a href="https://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+<div class="row" id="topnavbar">
+	<div id="logo">
+		<a href="http://geocash.herokuapp.com/"><img src="../static/images/logo.png" /></a>
 	</div>
-	
+	<div id="logout">
+		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+	</div>
+</div>
+<div class="container" id="content-container">
+
 	<!-- area for user input -->
-	<div class="row">
-		<div class="span5">
+	<div class="row" style="text-align: center;">
+		<!--<div class="span5">
 			<input type="text" name="friend_name" id="friend_name" class="input-block-level" placeholder="Your friend's name">
 		</div>
 		<div class="span2">
 			<button class="btn btn-primary" type="submit" id="finditbutton">Find 'em!</button>
-		</div>
+		</div>-->
+		<h3>Find your friend below to send them a gift.</h3>
 	</div>
 	
 	<!-- search results -->
 	<div class="row">
-		<div class="span6">
+		<div class="span6 offset3" >
 			<div class="error-holder">
 			</div>
 			<div class="data-holder">
@@ -60,7 +65,7 @@
 			<span>&nbsp; &nbsp;</span>
 			<a href="http://www.sendgrid.com"><img src="../static/images/sendgrid-logo.png" id="sendgrid-logo" /></a>
 			<span>&nbsp; &nbsp;</span>
-			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-logo.png" id="mongodb-logo" /></a>
+			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-powered-button.png" id="mongodb-logo" /></a>
 		</div>
 	</div>
 </div> <!-- /container -->
