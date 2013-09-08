@@ -163,7 +163,7 @@ def add_pending_payment():
 						   'venue_id':session['chosen_venue'],
 						   'amount':amount,
 						   'note':note}
-	print 'test point 00'
+
 	pending_gift_collection.insert(pending_payment)
 
 	print 'test point 0'
@@ -183,10 +183,12 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 	msg['Subject'] = "You've received a GeoCash from a Foursquare friend!"
 	msg['From'] = from_email
 	msg['To'] = recipient_email
+	print 'test point 0.5'
 	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'&v=20130907').json()
+	print 'test point 0.55'
 	venue_name = venue_response['user']['name']
     # return venue_response
-
+    print 'test point 1'
 	text = "Hi " + toName + ",\n Your \
 		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
 		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
