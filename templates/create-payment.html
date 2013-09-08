@@ -62,7 +62,7 @@
 	$(document).ready(function(){
 		//alert("READY!");
 		$("#button").click(function(){
-			var message = $("#message").val();
+			var message = $("#message").value;
 			alert(message);
 			var amount = $("#pay_amt").val();
 			var new_url = "http://geocash.herokuapp.com/add_pending_payment?note=" + message + "&amount=" + amount;
