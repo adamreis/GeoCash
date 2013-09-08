@@ -152,8 +152,9 @@ def add_venue():
 def add_pending_payment():
 	print 'test point 000'
 	note = request.args.get('note', '')
+	print 'test point 000.1'
 	amount = request.args.get('amount', '')
-
+	print 'test point 000.2'
 	pending_payment = {'recipient_id':session['friend_4sq_id'], 
 						  'sender_id':session['4sq_id'],
 						   'venue_id': session['chosen_venue'],
