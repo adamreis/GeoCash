@@ -105,10 +105,11 @@ def home():
 
 	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
 	friends = friends.json()['response']['friends']['items']
-
+print 'test point 1'
 	t = Template('pick-friend', FileSystemLoader('templates/'))
+print 'test point 2'
 	c = Context({'friends':friends})
-
+print 'test point 3'
 	return t.render(c)
 	# return render_template('pick-friend.html')
 
