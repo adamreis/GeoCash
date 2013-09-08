@@ -173,6 +173,10 @@ def add_venmo_token():
 def logout():
 	session.pop('4sqid', None)
 	session.pop('4sqtoken', None)
+	session.pop('chosen_venue', None)
+	session.pop('friend_email', None)
+	session.pop('friend_name', None)
+
 	print 'Logged out!'
 	return redirect(url_for('index'))
 
