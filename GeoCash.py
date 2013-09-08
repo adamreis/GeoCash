@@ -213,14 +213,16 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 	# Record the MIME types of both part - text/plain and text/html
 	part1 = MIMEText(text, 'plain')
 	part2 = MIMEText(html, 'html')
-
+	print 'test point 1'
 	# Attach parts into message container
 	msg.attach(part1)
 	msg.attach(part2)
-
+	print 'test point 2'
 	s = smtplib.SMTP('smtp.sendgrid.net', 587)
 	s.login(username, password)
+	print 'test point 3'
 	s.sendmail(from_email, recipient_email, msg.as_string())
+	print 'test point 4'
 	s.quit()
 
 @app.route('/venmoauth/', methods=['GET'])
