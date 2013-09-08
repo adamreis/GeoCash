@@ -215,7 +215,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 				<p style="font-size:large;">%s: <b>%s</b></p>
 				Click <a target="_blank" href="http://www.geoca.sh/">here</a> to let GeoCash know
 				when you check in at a place where a friend has left you a payment. Once
-				you check in on <a target="_blank" href="http://www.foursquare.com>Foursquare</a>, we'll
+				you check in on <a target="_blank" href="http://www.foursquare.com">Foursquare</a>, we'll
 				pass along %s's gift on <a target="_blank" href="http://www.venmo.com">
 				Venmo</a>.<br>
 			</body>
