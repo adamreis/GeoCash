@@ -150,6 +150,7 @@ def add_venue():
 
 @app.route('/add_pending_payment/', methods=['GET'])
 def add_pending_payment():
+	print 'test point 000'
 	note = request.args.get('note', '')
 	amount = request.args.get('amount', '')
 
