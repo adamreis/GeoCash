@@ -175,7 +175,7 @@ def add_pending_payment():
 	session.pop('user_name', None)
 	session.pop('friend_email',None)
 	
-	
+	print 'test point 6'
 	return payment_info
 
 def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
@@ -198,18 +198,18 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 		<html>
 			<head></head>
 			<body>
-				Hi {toName},<br>
-				Your friend {sender_name} sent you a GeoCash gift!<br>
-				It's waiting for you at {venue_name}.<br>
-				<p style="font-size:large;">{sender_name}: <b>{note}</b></p><br><br>
+				Hi %s,<br>
+				Your friend %s sent you a GeoCash gift!<br>
+				It's waiting for you at %s.<br>
+				<p style="font-size:large;">%s: <b>%s</b></p><br>
 				Click <a target="_blank" href="http://www.geoca.sh/">GeoCash</a> know
 				when you check in at a place where a friend has left you a payment. Once
 				you check in on <a target="_blank" href="http://www.foursquare.com</a>, we'll
-				pass along {sender_name}'s gift on <a target="_blank" href="http://www.venmo.com">
+				pass along %s's gift on <a target="_blank" href="http://www.venmo.com">
 				Venmo</a>.<br>
 			</body>
 		</html>
-		"""
+		""" %(toName, sender_name, venue_name, sender_name, note, sender_name)
 	print 'test point .96'
 	# Login creds
 	username = 'GeoCash'
@@ -229,6 +229,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	s.sendmail(from_email, recipient_email, msg.as_string())
 	print 'test point 4'
 	s.quit()
+	print 'test point 5'
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
