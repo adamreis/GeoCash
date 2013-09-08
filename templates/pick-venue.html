@@ -24,7 +24,8 @@
 	</div>
 </div>
 <div class="container" id="content-container">
-
+	<div class="row" id="spacer40">
+	</div>
 	<!-- area for user input -->
 	<div class="row">
 		<div class="span6">
@@ -37,7 +38,6 @@
 			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
 		</div>
 	</div>
-	
 	<!-- search results -->
 	<div class="row">
 		<div class="span6">
@@ -163,7 +163,8 @@
 	<!--The Map!-->
 	<style>
 		#map { 
-			height: 300px; 
+			height: 480px;
+			margin-top: 20px; 
 		}
 	</style>
 		<div class="span6">
@@ -178,7 +179,7 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(map);
 
-
+		//Not a mistake - just for fun
 		L.marker([51.5, -0.09]).addTo(map)
 			.bindPopup("<b>Hello world!</b><br />I am a popup.");
 
