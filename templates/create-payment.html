@@ -4,34 +4,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<title>GeoCash</title>
+
+	<!-- include Leaflet CSS and JavaScript files -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+	 <!--[if lte IE 8]>
+	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+	 <![endif]-->
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 </head>
 <body>
-<!-- content container -->
 
 <div class="container" id="content-container">
 	<div class="row span2 offset10">
-		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+		<a href="http://www.google.com"><div class="btn btn-primary">Log out</div></a>
 	</div>
+	
+	<!-- area for user input -->
 	<div class="row">
-		<div class="span6 hidden-phone" id="screenshot">
-			[insert screenshot]
-		</div>
-		<div class="span6" id="homepage-logo">
-			<img src="../static/images/logo.png" style="padding: 10px;"/>
-			<h1>Great! You can now receive money.</h1><br>
-			<h3>Once you check in, we'll let you know how to redeem your gift with Venmo.</h3><br>
-			
-			<br>
-			<br>
-			<p>Want to be able to send gifts to people? Connect your Venmo account and get started!</p>
-			<a href="{{venmo_auth_url}}">
-				<div class="btn btn-large" id="btn-signin-venmo">Sign in with Venmo</div>
-			</a>
-			<p>*We never post without your permission.</p>
+		<div class="span12">
+			Venue_id = 
 		</div>
 	</div>
-
+	
 	<div class="row" id="spacer100">
 	</div>
 	<div class="row">
@@ -49,5 +45,5 @@
 </div> <!-- /container -->
 
 </body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
 </html>

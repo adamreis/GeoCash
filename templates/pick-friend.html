@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<title>GeoCash</title>
+
+	<!-- include Leaflet CSS and JavaScript files -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+	 <!--[if lte IE 8]>
+	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+	 <![endif]-->
+	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+</head>
+<body>
+
+<div class="container" id="content-container">
+	<div class="row span2 offset10">
+		<a href="http://www.google.com"><div class="btn btn-primary">Log out</div></a>
+	</div>
+	
+	<!-- area for user input -->
+	<div class="row">
+		<div class="span5">
+			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name">
+		</div>
+		<div class="span5">
+			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area">
+		</div>
+		<div class="span2">
+			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
+		</div>
+	</div>
+	
+	<!-- search results -->
+	<div class="row">
+		<div class="span6">
+			<div class="error-holder">
+			</div>
+			<div class="data-holder">
+			</div>
+		<!-- custom javascript to dynamically populate search results -->
+		<script type="text/javascript">
+		//On document ready, wait for button click
+		$(document).ready(function(){
+		//when submit button is clicked, begin error checking and searching
+		$("#finditbutton").click(function(){
+		
+			//error checking first - must have venue name and geocode
+			var error = "";
+			if($("#venue_name").val() == "")
+				error += "Please give part of a venue name so we can search for you.<br>";
+			if($("#geocode").val() == "")
+				error += "Please give an area within which to search (e.g. New York or 90210 or Chicago, IL).";
+			//set error to hold either "" or new error(s)
+			$(".error-holder").html(error);
+
+			//if no errors, run the search and populate results
+			if(error == "") {
+				var name_url = "&query=" + $("#venue_name").val();
+				var location_url = "&near=" + $("#geocode").val();
+				/* really should be using client id/secret, but just using AUTH TOKEN for now */
+				var ajax_base_url = "https://api.foursquare.com/v2/venues/search?oauth_token=FOHYFALGXXFJYRX214AU2OEAJIT43MZTFVUHYZDE0GRHBSSS&v=20130907&limit=10";
+				var ajax_url = ajax_base_url + name_url + location_url;
+				
+				$.ajax({
+						url: ajax_url,
+						beforeSend: function ( xhr ) {
+							xhr.overrideMimeType("text/plain; charset=x-user-defined");
+						}
+					}).done(function ( data ) {
+						//DEBUGGING INFO - uncomment to show
+						/*if( console && console.log ) {
+							console.log("Sample of data:", data.slice(0, 100));
+						}*/
+						//alert(data);
+					  
+						//parse JSON data
+						var obj = jQuery.parseJSON(data);
+						//console.log(obj);	
+						
+						//if no results, display error message
+						if( !obj.response.venues[0] ) {
+							$(".data-holder").html("Sorry, we couldn't find anything! Try searching in a broader area or with a different name.");
+						}
+						//if result(s), iterate through and display
+						else {
+							//$(".data-holder").html(data);
+							//alert(obj.response.venues[0].name);
+							var dataHTML = "";
+
+							for(var i=0; i<obj.response.venues.length; i++){
+								//get the ith venue from the JSON response
+								var venue = obj.response.venues[i];
+
+								//build the search results
+								dataHTML += "<a href=\"pick-venue.html?friend_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
+								//some venues don't have address or cross street, so avoid "undefined"
+								if(venue.location.address) {
+									dataHTML += " - " + venue.location.address;
+								}
+								if(venue.location.crossStreet) {
+									dataHTML += " " + venue.location.crossStreet;
+								}
+								dataHTML += "</div></a><br><br>";
+							
+							}
+							//set all data in search results
+							$(".data-holder").html(dataHTML);
+
+						}
+				}); //end ajax
+			} // end of search & population (no errors to start)
+		}); //end of click function
+		}); //end of document ready
+		</script>
+		</div>
+
+		</div>
+	</div>
+	
+	<div class="row" id="spacer100">
+	</div>
+	<div class="row">
+		<div class="span12" id="powered-by">
+		<span>Powered by &nbsp;</span>
+			<a href="http://www.foursquare.com"><img src="../static/images/foursquare-logo.png" id="foursquare-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.venmo.com"><img src="../static/images/venmo_logo_blue.png" id="venmo-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.sendgrid.com"><img src="../static/images/sendgrid-logo.png" id="sendgrid-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-logo.png" id="mongodb-logo" /></a>
+		</div>
+	</div>
+</div> <!-- /container -->
+
+</body>
+
+</html>
