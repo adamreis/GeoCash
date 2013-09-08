@@ -24,15 +24,20 @@
 	<div class="row">
 		<label for="pay_amt" class="span1 offset5">Amount $</label>
 		<div class="span1">
-			<input type="number" step=".01" name="pay_amt" id="pay_amt" class="input-block-level" placeholder="0.00">
+			<input type="number" step=".01" value="5.00" min=".01" name="pay_amt" id="pay_amt" class="input-block-level" placeholder="0.00">
 		</div>
 	</div>
 
 	<!-- Insert here text that tells the user what information will be sent automatically (ie: where the money will be left, the amount of money.  Maybe make it possible to opt out of either piece of information.  -->
 
 	<duv class'"row">
-		<div class="span12">
+		<!--<div class="span10">
 			<input type="text" name="message" id="message" class="input-block-level" placeholder="I'm leaving you a gift!">
+		</div>-->
+		<div class="span8 offset2">
+		<textarea name="comments" id="comments" maxlength="2000" style="color:black" placeholder="I'm leaving you a gift!">
+		   
+		</textarea><br />
 		</div>
 	</div>
 	<div class="row">
