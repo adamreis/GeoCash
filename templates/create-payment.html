@@ -50,6 +50,7 @@
 			$.post("/add_pending_payment/",function(note,amount){
     		alert("Note: " + $("#message").val() + "\nAmount: " + $("#pay_amt").val());
   			});
+  			window.location = "http://geocash.herokuapp.com/add_pending_payment/";
 		});
 	});
 	</script>
