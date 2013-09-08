@@ -279,8 +279,8 @@ def dummy_push():
 		mongo_connect()
 
 	print 'request:'
-	recip_id = json.loads(request.form['user'])['id']
-	venue_id = json.loads(request.form['checkin'])['venue']['id']
+	recip_id = str(json.loads(request.form['user'])['id'])
+	venue_id = str(json.loads(request.form['checkin'])['venue']['id'])
 	print 'recip id: '+recip_id
 	print 'venue id: '+venue_id
 	gift_to_process = pending_gift_collection.find_one({'recipient_id':recip_id,'venue_id':venue_id})
