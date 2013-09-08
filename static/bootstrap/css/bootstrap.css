@@ -6219,6 +6219,7 @@ a.badge:focus {
 }
 #btn-signin {
 	/*color: #3f94d0;*/
+	font-weight: bold;
 }
 #btn-signin-venmo {
 	color: #3f94d0;
