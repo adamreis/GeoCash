@@ -299,6 +299,8 @@ def dummy_push():
 		note = gift_to_process['note']
 		amount = gift_to_process['amount']
 		print 'test point 0.3'
+
+		pending_gift_collection.remove(gift_to_process)
 		initiate_payment(sender_venmo_token, recip_email, note, amount)
 	else:
 		pass
