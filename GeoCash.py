@@ -158,10 +158,10 @@ def add_pending_payment():
 						   'venue_id': session['chosen_venue'],
 						   'amount':amount,
 						   'note':note}
-
+	print 'test point 00'
 	pending_gift_collection.insert(pending_payment)
 
-
+	print 'test point 0'
 	send_notification_email(session['user_name'],session['friend_name'],session['friend_email'], session['chosen_venue'], note, amount)
 
 	session.pop('chosen_venue', None)
@@ -169,8 +169,8 @@ def add_pending_payment():
 	session.pop('friend_name', None)
 	session.pop('user_name', None)
 	session.pop('friend_email',None)
-	# payment_info ='NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
-
+	
+	payment_info ='NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
 	return payment_info
 
 def send_notification_email(sender_name, recipient_first_name, recipient_email, venue_id, note, amount):
@@ -255,7 +255,11 @@ def add_venmo_token():
 def logout():
 	session.pop('4sqid', None)
 	session.pop('4sqtoken', None)
-	
+	session.pop('chosen_venue', None)
+	session.pop('friend_4sq_id', None)
+	session.pop('friend_name', None)
+	session.pop('user_name', None)
+	session.pop('friend_email',None)
 
 	print 'Logged out!'
 	return redirect(url_for('index'))
