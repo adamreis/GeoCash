@@ -50,7 +50,19 @@
 		<script type="text/javascript">
 		//On document ready, wait for button click
 		$(document).ready(function(){
-		//when submit button is clicked, begin error checking and searching
+			//allow user to hit enter from either text box
+			$("#geocode").keyup(function(event){
+				if(event.keyCode == 13) {
+					$("#finditbutton").click();
+				}
+			});
+			$("#venue_name").keyup(function(event){
+				if(event.keyCode == 13) {
+					$("#finditbutton").click();
+				}
+			});
+			
+		//when submit button is clicked (or enter hit), begin error checking and searching
 		$("#finditbutton").click(function(){
 		
 			//error checking first - must have venue name and geocode
@@ -61,6 +73,9 @@
 				error += "Please give an area within which to search (e.g. New York or 90210 or Chicago, IL).";
 			//set error to hold either "" or new error(s)
 			$(".error-holder").html(error);
+			
+			var dataHTML = "";
+			$(".data-holder").html(dataHTML);
 
 			//if no errors, run the search and populate results
 			if(error == "") {
