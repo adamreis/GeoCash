@@ -303,6 +303,7 @@ def dummy_push():
 	print 'gift to process: '+str(gift_to_process)
 
 def initiate_paymennt(sender_token, recip_email, note, amount):
+	print 'test point 1'
 	data = {
 		'access_token':sender_token,
 		'email':recip_email,
