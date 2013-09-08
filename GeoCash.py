@@ -160,7 +160,7 @@ def add_pending_payment():
 
 	pending_payment = {'recipient_id':session['friend_4sq_id'], 
 						  'sender_id':session['4sq_id'],
-						   'venue_id': session['chosen_venue'],
+						   'venue_id':session['chosen_venue'],
 						   'amount':amount,
 						   'note':note}
 	print 'test point 00'
