@@ -35,9 +35,9 @@ foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_get_user_id_base_url = 'https://api.foursquare.com/v2/users/self?'
 foursq_get_friends_base_url = 'https://api.foursquare.com/v2/users/self/friends?'
 
-home_redirect_uri = 'https://geoca.sh/home/'
-new_user_redirect_uri = 'https://geoca.sh/newuser/'
-add_venmo_redirect_uri = 'https://geoca.sh/venmoauth/'
+home_redirect_uri = 'https://geocash.herokuapp.com/home/'
+new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
+add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
 venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
 venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
 
