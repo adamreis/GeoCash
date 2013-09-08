@@ -176,7 +176,7 @@ def add_pending_payment():
 	session.pop('friend_email',None)
 	
 	print 'test point 6'
-	return payment_info
+	return redirect(url_for('home'))
 
 def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
 	msg = MIMEMultipart('alternative')
