@@ -104,7 +104,7 @@ def home():
 
 	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken'])
 
-	return str(friends)
+	return str(friends.json())
 	# return render_template('pick-friend.html')
 
 @app.route('/venmoauth/', methods=['GET'])
