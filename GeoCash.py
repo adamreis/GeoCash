@@ -183,14 +183,12 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
     #return venue_response
 
 	text = "Hi " + toName + ",\n" +
-		"Your friend " + sender_name + " sent you a GeoCash gift! It's waiting for you at " + 
-		venue_name + ".\n" + 
-		sender_name + ": " + note + "\n\n" +
-		"Go to http://geoca.sh to authenticate GeoCash with Foursquare so you can claim" +
-		" the payment on Venmo when you check in there.\n" +
-		"Authenticating will let GeoCash know when you check in at a place where a friend " +
-		"has left you a payment. Once you check in on Foursquare, we'll pass along " +
-		sender_name + "'s gift on Venmo.\n"
+		"Your friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
+		at " venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
+		to authenticate GeoCash with Foursquare so you can claim the payment on Venmo when you \
+		check in there.\n Authenticating will let GeoCash know when you check in at a place \
+		where a friend has left you a payment. Once you check in on Foursquare, we'll pass \
+		along " +sender_name + "'s gift on Venmo.\n"
 	html = """\n
 		<html>
 			<head></head>
