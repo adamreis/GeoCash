@@ -305,7 +305,7 @@ def dummy_push():
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
 		print 'test point 0.1 (contact:)'
-		print response['response']['user']['contact']
+		print response
 		recip_email = response['response']['user']['contact']['email']
 		print 'test point 0.2'
 		note = gift_to_process['note']
@@ -315,7 +315,7 @@ def dummy_push():
 		pending_gift_collection.remove(gift_to_process)
 		initiate_payment(sender_venmo_token, recip_email, note, amount)
 	else:
-		pass
+		return '200 okay'
 
 def initiate_payment(sender_token, recip_email, note, amount):
 	print 'test point 1'
