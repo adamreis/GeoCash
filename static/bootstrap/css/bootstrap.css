@@ -6170,8 +6170,29 @@ a.badge:focus {
 #spacer100 {
 	height: 100px;
 }
+#spacer40 {
+	height: 40px;
+}
 #content-container {
-	margin-top: 40px;
+	margin-top: 20px;
+}
+#topnavbar {
+	/*padding: 10px;*/
+	background-color: #333;
+}
+#logo {
+	float: left;
+	margin-left: 20%;
+}
+#logo img{
+	height: 50px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+#logout {
+	float: right;
+	margin-right: 20%;
+	margin-top: 10px;
 }
 #screenshot {
 	text-align: center;
