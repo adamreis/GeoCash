@@ -193,6 +193,7 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 		check in there.\n Authenticating will let GeoCash know when you check in at a place \
 		where a friend has left you a payment. Once you check in on Foursquare, we'll pass \
 		along " +sender_name + "'s gift on Venmo.\n"
+	print 'test point .93'
 	html = """\n
 		<html>
 			<head></head>
