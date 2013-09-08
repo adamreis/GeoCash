@@ -6228,6 +6228,9 @@ a.badge:focus {
 #mongodb-logo{
 	height: 45px;
 }
+#foursquare-logo:hover, #venmo-logo:hover, #sendgrid-logo:hover, #mongodb-logo:hover{
+	opacity: 0.5;
+}
 .error-holder{
 	color: #f00;
 }
