@@ -27,7 +27,7 @@ home_redirect_uri = 'https://geocash.herokuapp.com/home/'
 new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
 add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
 venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
-
+venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
 
 @app.route('/')
 def index():
@@ -110,8 +110,8 @@ def add_venmo_token():
 	args = {'client_id':VENMO_CLIENT_ID, 
 		'client_secret':VENMO_SECRET, 
 		 		 'code':code}
-	return str(args)
-	# return venmo_access_token_base_url+urllib.urlencode(args)
+	# return str(args)
+	return venmo_access_token_base_url+urllib.urlencode(args)
 
 	# user_venmo_access_token = requests.get(venmo_access_token_base_url+urllib.urlencode(args)).json()
 	
