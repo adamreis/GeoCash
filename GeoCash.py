@@ -184,7 +184,7 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 	msg['From'] = from_email
 	msg['To'] = recipient_email
 	print 'test point 0.5'
-	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'&v=20130907').json()
+	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'?v=20130907').json()
 	print 'test point 0.55'
 	print venue_response
 	venue_name = venue_response['venue']['name']
