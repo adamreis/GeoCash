@@ -101,10 +101,10 @@ def home():
 		return render_template('venmo-login.html', venmo_auth_url=url)
 
 	
-		
 
 
-	return render_template('home.html')
+
+	return render_template('pick-friend.html')
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
