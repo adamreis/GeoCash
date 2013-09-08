@@ -6230,3 +6230,12 @@ a.badge:focus {
 .btn-select-venue {
 	color: #3f94d0;
 }
+label {
+	color: #444444;
+	font: normal 14px sans-serif !important;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;*/
+  
+
+}
