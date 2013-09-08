@@ -299,8 +299,8 @@ def dummy_push():
 		amount = gift_to_process['amount']
 
 		initiate_payment(sender_venmo_token, recip_email, note, amount)
-
-	print 'gift to process: '+str(gift_to_process)
+	else:
+		pass
 
 def initiate_paymennt(sender_token, recip_email, note, amount):
 	print 'test point 1'
@@ -310,8 +310,10 @@ def initiate_paymennt(sender_token, recip_email, note, amount):
 		'note':note,
 		'amount':amount
 	}
+	print 'test point 2'
 	url = 'https://api.venmo.com/payments'
 	response = requests.post(url,data)
+	print 'test point 3'
 
 def mongo_connect():
 	print 'mongo connect called'
