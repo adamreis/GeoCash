@@ -42,7 +42,6 @@
 					Sorry, we couldn't find anything! Try searching in a broader area or with a different name.
 				{% endif %}
 
-				//if result(s), iterate through and display
 				{% for friend in friends %}
 					<a href="pick-venue.html?friend_id={{friend.id}}">
 						<div class="btn btn-select-venue">{{friend.firstName}} {{friend.lastName}}</div>
