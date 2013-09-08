@@ -25,6 +25,7 @@ VENMO_SECRET = os.environ['VENMO_SECRET']
 MONGOHQ_USER = os.environ['MONGOHQ_USER']
 MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
 
+did_just_finish = False
 mongo_connected = False
 user_collection = None
 pending_gift_collection = None
@@ -126,7 +127,12 @@ def home():
 		friends = friends.json()['response']['friends']['items']
 
 		template = env.get_template('pick-friend.html')
-		return template.render(friends=friends)
+		if did_just_finish:
+			return template.render(friends=friends,showOrNot='block')
+			global did_just_finish
+			did_just_finish = False
+		else:
+			return template.render(friends=friends,showOrNot='none')
 	
 	elif 'chosen_venue' not in session:
 		return render_template('pick-venue.html')
@@ -179,6 +185,8 @@ def add_pending_payment():
 	session.pop('friend_email',None)
 	
 	print 'test point 6'
+	global did_just_finish
+	did_just_finish = True
 	return redirect(url_for('home'))
 
 def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
