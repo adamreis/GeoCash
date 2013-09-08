@@ -304,7 +304,8 @@ def dummy_push():
 		print 'recip 4sq token: '+recip_4sq_token
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
-		print 'test point 0.1'
+		print 'test point 0.1 (contact:)'
+		print response['response']['user']['contact']
 		recip_email = response['response']['user']['contact']['email']
 		print 'test point 0.2'
 		note = gift_to_process['note']
