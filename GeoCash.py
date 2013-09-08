@@ -35,9 +35,9 @@ foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_get_user_id_base_url = 'https://api.foursquare.com/v2/users/self?'
 foursq_get_friends_base_url = 'https://api.foursquare.com/v2/users/self/friends?'
 
-home_redirect_uri = 'https://geocash.herokuapp.com/home/'
-new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
-add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
+home_redirect_uri = 'https://geoca.sh/home/'
+new_user_redirect_uri = 'https://geoca.sh/newuser/'
+add_venmo_redirect_uri = 'https://geoca.sh/venmoauth/'
 venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
 venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
 
@@ -202,7 +202,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	print 'test point .9'
 	text = "Hi " + toName + ",\n Your \
 		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
-		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geocash.herokuapp.com \
+		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
 		to authenticate GeoCash with Foursquare so you can claim the payment on Venmo when you \
 		check in there.\n Authenticating will let GeoCash know when you check in at a place \
 		where a friend has left you a payment. Once you check in on Foursquare, we'll pass \
@@ -216,7 +216,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 				Your friend %s sent you a GeoCash gift!<br>
 				It's waiting for you at %s.<br>
 				<p style="font-size:large;">%s: <b>%s</b></p>
-				Click <a target="_blank" href="http://www.geocash.herokuapp.com/">here</a> to let GeoCash know
+				Click <a target="_blank" href="http://geoca.sh/">here</a> to let GeoCash know
 				when you check in at a place where a friend has left you a payment. Once
 				you check in on <a target="_blank" href="http://www.foursquare.com">Foursquare</a>, we'll
 				pass along %s's gift on <a target="_blank" href="http://www.venmo.com">
