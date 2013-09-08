@@ -280,12 +280,11 @@ def dummy_push():
 
 	print 'request:'
 	recip_id = json.loads(request.form['user'])['id']
-	print 'id: '+recip_id
-
 	venue_id = json.loads(request.form['checkin'])['venue']['id']
-	print 'venue id: '+venue_id
+	
+	gift_to_process = pending_gift_collection.find_one({'recipient_id':recip_id,'venue_id':venue_id})
 
-	return '200 OK'
+	print 'gift to process: '+gift_to_process
 
 def mongo_connect():
 	print 'mongo connect called'
