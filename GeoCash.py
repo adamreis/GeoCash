@@ -185,7 +185,7 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 	msg['To'] = recipient_email
 	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'?oauth_token='+session['4sqtoken']+'&v=20130907').json()
 	venue_name = venue_response['response']['venue']['name']
-	print 'test point 1'
+	print 'test point .9'
 	text = "Hi " + toName + ",\n Your \
 		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
 		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
@@ -209,7 +209,7 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 			</body>
 		</html>
 		"""
-
+	print 'test point .96'
 	# Login creds
 	username = 'GeoCash'
 	password = "pennappscolumbia1"
