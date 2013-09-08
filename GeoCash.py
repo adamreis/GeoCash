@@ -178,7 +178,7 @@ def add_pending_payment():
 	
 	return payment_info
 
-def send_notification_email(sender_name, recipient_first_name, recipient_email, venue_id, note, amount):
+def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
 	msg = MIMEMultipart('alternative')
 	msg['Subject'] = "You've received a GeoCash from a Foursquare friend!"
 	msg['From'] = from_email
@@ -198,7 +198,7 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 		<html>
 			<head></head>
 			<body>
-				Hi {recipient_first_name},<br>
+				Hi {toName},<br>
 				Your friend {sender_name} sent you a GeoCash gift!<br>
 				It's waiting for you at {venue_name}.<br>
 				<p style="font-size:large;">{sender_name}: <b>{note}</b></p><br><br>
