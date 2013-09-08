@@ -292,7 +292,7 @@ def dummy_push():
 		recip_4sq_token = user_collection.find_one({'4sq_id':recip_id})['4sq_token']
 		print 'recip 4sq token: '+recip_4sq_token
 
-		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907')
+		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
 		print 'contact: '
 		print response['response']['user']['contact']
 
