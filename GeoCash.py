@@ -285,7 +285,7 @@ def logout():
 	print 'Logged out!'
 	return redirect(url_for('index'))
 
-@app.route('/faq/', methods = ['POST'])
+@app.route('/faq/', methods = ['GET'])
 def faq():
 	return render_template('faq.html')
 
