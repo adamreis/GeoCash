@@ -20,26 +20,29 @@
 	<div class="row span2 offset10">
 		<a href="https://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
 	</div>
-	
+
+	<form action="/add_pending_payment" method="post">	
 	<div class="row">
 		<label for="pay_amt" class="span1 offset5">Amount $</label>
 		<div class="span1">
-			<input type="number" step=".01" name="pay_amt" id="pay_amt" class="input-block-level" placeholder="0.00">
+			<input type="number" step=".01" name="amount" id="pay_amt" class="input-block-level" placeholder="0.00">
 		</div>
 	</div>
 
 	<!-- Insert here text that tells the user what information will be sent automatically (ie: where the money will be left, the amount of money.  Maybe make it possible to opt out of either piece of information.  -->
 
-	<duv class'"row">
+
+	<div class="row">
 		<div class="span12">
-			<input type="text" name="message" id="message" class="input-block-level" placeholder="I'm leaving you a gift!">
+			<input type="text" name="note" id="message" class="input-block-level" placeholder="I'm leaving you a gift!">
 		</div>
 	</div>
 	<div class="row">
 		<div class="span2 offset6">
-			<a href="http://www.google.com"><div class="btn btn-primary">Leave Gift</div></a>
+			<input type="submit" name="submit" value="Send Gift">
 		</div>
 	</div>
+	</form>
 	
 	<div class="row" id="spacer100">
 	</div>

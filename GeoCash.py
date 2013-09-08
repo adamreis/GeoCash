@@ -105,18 +105,45 @@ def home():
 		url = venmo_grant_access_base_url+urllib.urlencode(args)
 		return render_template('venmo-login.html', venmo_auth_url=url)
 
-	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
-	friends = friends.json()['response']['friends']['items']
-	# print 'test point 1'
-	# t = Template('pick-friend', FileSystemLoader('templates/'))
-	# print 'test point 2'
-	# c = Context({'friends':friends})
-	# print 'test point 3'
-	# return t.render(c)
-	template = env.get_template('pick-friend.html')
-	return template.render(friends=friends)
-	# return str(friends)	
-	# return render_template('pick-friend.html',friends=friends)
+	if 'friend_email' not in session:
+		friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
+		friends = friends.json()['response']['friends']['items']
+
+		template = env.get_template('pick-friend.html')
+		return template.render(friends=friends)
+	
+	elif 'chosen_venue' not in session:
+		return render_template('pick-venue.html')
+
+	else:
+		return render_template('create-payment.html')
+
+@app.route('/add_friend/',methods=['POST'])
+def add_friend():
+	friend_email = request.args.get('friend_email', '')
+	friend_name = request.args.get('friend_name', '')
+	session['friend_email']=friend_email
+	session['friend_name']=friend_name
+	return redirect(url_for('home'))
+
+@app.route('/add_venue/',methods=['POST'])
+def add_venue():
+	venue_id = request.args.get('venue_id', '')
+	session['chosen_venue']=venue_id
+	return redirect(url_for('home'))
+
+@app.route('/add_pending_payment/', methods=['POST'])
+def add_pending_payment():
+	note = request.args.get('note', '')
+	amount = request.args.get('amount', '')
+
+	payment_info ='NEW PAYMENT:\n'+session['friend_name']+
+					'\n'+session['friend_email']+'\n'+
+					session['chosen_venue']+'\n'+note+'\n'+amount
+
+	return payment_info
+
+
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
