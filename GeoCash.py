@@ -102,7 +102,7 @@ def home():
 		url = venmo_grant_access_base_url+urllib.urlencode(args)
 		return render_template('venmo-login.html', venmo_auth_url=url)
 
-	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken'])
+	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
 
 	return str(friends.json())
 	# return render_template('pick-friend.html')
