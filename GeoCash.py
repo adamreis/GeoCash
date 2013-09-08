@@ -118,7 +118,7 @@ def home():
 	else:
 		return render_template('create-payment.html')
 
-@app.route('/add_friend/',methods=['POST'])
+@app.route('/add_friend',methods=['POST'])
 def add_friend():
 	friend_email = request.args.get('friend_email', '')
 	friend_name = request.args.get('friend_name', '')
