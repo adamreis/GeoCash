@@ -101,7 +101,7 @@
 								var venue = obj.response.venues[i];
 								
 								//build the search results
-								dataHTML += "<a href=http://geocash.herokuapp.com/add_venue?venue_id=" + venue.id><div class=\"btn btn-select-venue\">" + venue.name;
+								dataHTML += "<a href=http://geocash.herokuapp.com/add_venue?venue_id=" + venue.id + "><div class=\"btn btn-select-venue\">" + venue.name;
 								//some venues don't have address or cross street, so avoid "undefined"
 								if(venue.location.address) {
 									dataHTML += " - " + venue.location.address;
