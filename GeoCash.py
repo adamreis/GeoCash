@@ -126,10 +126,11 @@ def home():
 		friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
 		friends = friends.json()['response']['friends']['items']
 
+		global did_just_finish
 		template = env.get_template('pick-friend.html')
 		if did_just_finish:
 			return template.render(friends=friends,showOrNot='block')
-			global did_just_finish
+			
 			did_just_finish = False
 		else:
 			return template.render(friends=friends,showOrNot='none')
