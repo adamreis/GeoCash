@@ -114,8 +114,8 @@ def home():
 	# print 'test point 3'
 	# return t.render(c)
 	template = env.get_template('pick-friend.html')
-	# return template.render(friends=friends)
-	return str(friends)	
+	return template.render(friends=friends)
+	# return str(friends)	
 	# return render_template('pick-friend.html',friends=friends)
 
 @app.route('/venmoauth/', methods=['GET'])
