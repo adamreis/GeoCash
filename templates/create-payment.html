@@ -21,7 +21,7 @@
 		<a href="https://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
 	</div>
 
-	<form action="/add_pending_payment" method="post">	
+	<!--<form action="/add_pending_payment" method="post">-->	
 	<div class="row">
 		<label for="pay_amt" class="span1 offset5">Amount $</label>
 		<div class="span1">
@@ -39,10 +39,21 @@
 	</div>
 	<div class="row">
 		<div class="span2 offset6">
-			<input type="submit" name="submit" value="Send Gift">
+			<input type="submit" name="submit" value="Send Gift" id="button">
 		</div>
 	</div>
-	</form>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		alert("READY!");
+		$("#button").click(function(){
+			$.post("/add_pending_payment/",function(note,amount){
+    		alert("Note: " + $("#message").val() + "\nAmount: " + $("#pay_amt").val());
+  			});
+		});
+	});
+	</script>
+	<!--</form>-->
 	
 	<div class="row" id="spacer100">
 	</div>

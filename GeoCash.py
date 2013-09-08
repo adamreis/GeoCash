@@ -132,7 +132,7 @@ def add_venue():
 	session['chosen_venue']=venue_id
 	return redirect(url_for('home'))
 
-@app.route('/add_pending_payment/', methods=['GET'])
+@app.route('/add_pending_payment/', methods=['POST'])
 def add_pending_payment():
 	note = request.args.get('note', '')
 	amount = request.args.get('amount', '')
