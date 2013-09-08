@@ -285,6 +285,10 @@ def logout():
 	print 'Logged out!'
 	return redirect(url_for('index'))
 
+@app.route('/faq/', methods = ['POST'])
+def faq():
+	return render_template('faq.html')
+
 @app.route('/push/', methods=['POST'])
 def dummy_push():
 	if not mongo_connected:
