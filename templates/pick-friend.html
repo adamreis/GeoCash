@@ -24,13 +24,10 @@
 	<!-- area for user input -->
 	<div class="row">
 		<div class="span5">
-			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name">
-		</div>
-		<div class="span5">
-			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area">
+			<input type="text" name="friend_name" id="friend_name" class="input-block-level" placeholder="Your friend's name">
 		</div>
 		<div class="span2">
-			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
+			<button class="btn btn-primary" type="submit" id="finditbutton">Find 'em!</button>
 		</div>
 	</div>
 	
@@ -50,68 +47,40 @@
 		
 			//error checking first - must have venue name and geocode
 			var error = "";
-			if($("#venue_name").val() == "")
-				error += "Please give part of a venue name so we can search for you.<br>";
-			if($("#geocode").val() == "")
-				error += "Please give an area within which to search (e.g. New York or 90210 or Chicago, IL).";
+			if($("#friend_name").val() == "")
+				error += "Please give your friend's name so we can search.<br>";
 			//set error to hold either "" or new error(s)
 			$(".error-holder").html(error);
 
 			//if no errors, run the search and populate results
 			if(error == "") {
-				var name_url = "&query=" + $("#venue_name").val();
-				var location_url = "&near=" + $("#geocode").val();
-				/* really should be using client id/secret, but just using AUTH TOKEN for now */
-				var ajax_base_url = "https://api.foursquare.com/v2/venues/search?oauth_token=FOHYFALGXXFJYRX214AU2OEAJIT43MZTFVUHYZDE0GRHBSSS&v=20130907&limit=10";
-				var ajax_url = ajax_base_url + name_url + location_url;
+				var obj = jQuery.parseJSON(data);
+				//console.log(obj);	
 				
-				$.ajax({
-						url: ajax_url,
-						beforeSend: function ( xhr ) {
-							xhr.overrideMimeType("text/plain; charset=x-user-defined");
-						}
-					}).done(function ( data ) {
-						//DEBUGGING INFO - uncomment to show
-						/*if( console && console.log ) {
-							console.log("Sample of data:", data.slice(0, 100));
-						}*/
-						//alert(data);
-					  
-						//parse JSON data
-						var obj = jQuery.parseJSON(data);
-						//console.log(obj);	
-						
-						//if no results, display error message
-						if( !obj.response.venues[0] ) {
-							$(".data-holder").html("Sorry, we couldn't find anything! Try searching in a broader area or with a different name.");
-						}
-						//if result(s), iterate through and display
-						else {
-							//$(".data-holder").html(data);
-							//alert(obj.response.venues[0].name);
-							var dataHTML = "";
+				//if no results, display error message
+			
+				if( !obj.response.venues[0] ) {
+					$(".data-holder").html("Sorry, we couldn't find anything! Try searching in a broader area or with a different name.");
+				}
+				//if result(s), iterate through and display
+				else {
+					//$(".data-holder").html(data);
+					//alert(obj.response.venues[0].name);
+					var dataHTML = "";
 
-							for(var i=0; i<obj.response.venues.length; i++){
-								//get the ith venue from the JSON response
-								var venue = obj.response.venues[i];
+					for(var i=0; i<obj.response.venues.length; i++){
+						//get the ith venue from the JSON response
+						var venue = obj.response.venues[i];
 
-								//build the search results
-								dataHTML += "<a href=\"pick-venue.html?friend_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
-								//some venues don't have address or cross street, so avoid "undefined"
-								if(venue.location.address) {
-									dataHTML += " - " + venue.location.address;
-								}
-								if(venue.location.crossStreet) {
-									dataHTML += " " + venue.location.crossStreet;
-								}
-								dataHTML += "</div></a><br><br>";
-							
-							}
-							//set all data in search results
-							$(".data-holder").html(dataHTML);
+						//build the search results
+						dataHTML += "<a href=\"pick-venue.html?friend_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
+						dataHTML += "</div></a><br><br>";
+					
+					}
+					//set all data in search results
+					$(".data-holder").html(dataHTML);
 
-						}
-				}); //end ajax
+				}
 			} // end of search & population (no errors to start)
 		}); //end of click function
 		}); //end of document ready
