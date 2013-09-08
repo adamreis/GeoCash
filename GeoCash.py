@@ -183,11 +183,8 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 	msg['Subject'] = "You've received a GeoCash from a Foursquare friend!"
 	msg['From'] = from_email
 	msg['To'] = recipient_email
-	print 'test point 0.5'
 	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'?oauth_token='+session['4sqtoken']+'&v=20130907').json()
-	print 'test point 0.55'
-	print venue_response['response']['venue']['name']
-	venue_name = venue_response['venue']['name']
+	venue_name = venue_response['response']['venue']['name']
 	print 'test point 1'
 	text = "Hi " + toName + ",\n Your \
 		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
