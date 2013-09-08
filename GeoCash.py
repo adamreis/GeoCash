@@ -118,7 +118,7 @@ def home():
 	else:
 		return render_template('create-payment.html')
 
-@app.route('/add_friend',methods=['POST'])
+@app.route('/add_friend',methods=['GET'])
 def add_friend():
 	friend_email = request.args.get('friend_email', '')
 	friend_name = request.args.get('friend_name', '')
@@ -126,7 +126,7 @@ def add_friend():
 	session['friend_name']=friend_name
 	return redirect(url_for('home'))
 
-@app.route('/add_venue/',methods=['POST'])
+@app.route('/add_venue/',methods=['GET'])
 def add_venue():
 	venue_id = request.args.get('venue_id', '')
 	session['chosen_venue']=venue_id
