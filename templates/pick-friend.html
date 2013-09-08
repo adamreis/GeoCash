@@ -19,10 +19,10 @@
 <body>
 <div class="row" id="topnavbar">
 	<div id="logo">
-		<a href="http://geocash.herokuapp.com/"><img src="../static/images/logo.png" /></a>
+		<a href="http://geoca.sh/"><img src="../static/images/logo.png" /></a>
 	</div>
 	<div id="logout">
-		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+		<a href="http://geoca.sh/logout/"><div class="btn btn-primary">Log out</div></a>
 	</div>
 </div>
 <div class="container" id="content-container">
@@ -58,7 +58,7 @@
 			</div>
 
 				{% for friend in friends %}
-					<a href="http://geocash.herokuapp.com/add_friend?friend_email={{friend.contact.email}}&friend_name={{friend.firstName}}&friend_4sq_id={{friend.id}}">
+					<a href="http://geoca.sh/add_friend?friend_email={{friend.contact.email}}&friend_name={{friend.firstName}}&friend_4sq_id={{friend.id}}">
 						<div class="btn btn-select-venue">{{friend.firstName}} {{friend.lastName}}</div><br>
 					</a>
 				{% endfor %}
