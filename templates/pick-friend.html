@@ -40,8 +40,8 @@
 			</div>
 
 				{% for friend in friends %}
-					<a href="pick-venue.html?friend_id={{friend.id}}">
-						<div class="btn btn-select-venue">{{friend.firstName}} {{friend.lastName}}</div>
+					<a href="geocash.herokuapp.com/pick-venue.html?friend_id={{friend.id}}">
+						<div class="btn btn-select-venue">{{friend.firstName}} {{friend.lastName}}</div><br>
 					</a>
 				{% endfor %}
 		</div>
