@@ -206,22 +206,22 @@ def send_notification_email(sender_name, recipient_first_name, recipient_email, 
 		</html>
 		"""
 
-		# Login creds
-		username = 'GeoCash'
-		password = "pennappscolumbia1"
+	# Login creds
+	username = 'GeoCash'
+	password = "pennappscolumbia1"
 
-		# Record the MIME types of both part - text/plain and text/html
-		part1 = MIMEText(text, 'plain')
-		part2 = MIMEText(html, 'html')
+	# Record the MIME types of both part - text/plain and text/html
+	part1 = MIMEText(text, 'plain')
+	part2 = MIMEText(html, 'html')
 
-		# Attach parts into message container
-		msg.attach(part1)
-		msg.attach(part2)
+	# Attach parts into message container
+	msg.attach(part1)
+	msg.attach(part2)
 
-		s = smtplib.SMTP('smtp.sendgrid.net', 587)
-		s.login(username, password)
-		s.sendmail(from_email, recipient_email, msg.as_string())
-		s.quit()
+	s = smtplib.SMTP('smtp.sendgrid.net', 587)
+	s.login(username, password)
+	s.sendmail(from_email, recipient_email, msg.as_string())
+	s.quit()
 
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
