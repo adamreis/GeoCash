@@ -24,31 +24,39 @@
 	</div>
 </div>
 <div class="container" id="content-container">
-
-	<!--<form action="/add_pending_payment" method="post">-->	
-	<div class="row">
-		<label for="pay_amt" class="span1 offset5">Amount $</label>
-		<div class="span1">
-			<input type="number" step=".01" value="5.00" min=".01" name="pay_amt" id="pay_amt" class="input-block-level">
-
-		</div>
+	<div class="row" id="spacer40">
 	</div>
 
+	<div class="row">
+		<label for="pay_amt" class="span1 offset5" style="margin-top: 7px">Amount: $</label>
+		<div class="span1">
+			<input type="number" step=".01" value="5.00" min=".01" name="pay_amt" id="pay_amt" class="input-block-level">
+		</div>
+	</div>
+	<div class="row">
+		&nbsp;
+	</div>
 	<div class="row" style="text-align:center">
 		<label for="comments" class="span12" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Add a note to your gift!  We'll let your friend know how to claim it.</label>
 	</div>
-
-
+	<div class="row">
+		&nbsp;
+	</div>
 	<div class="row" style="text-align:center">
 		<div class="span12">
 		<textarea name="comments" id="comments" maxlength="2000" style="color:black; width: 400px; height: 60px;" placeholder=""></textarea><br />
 		</div>
 	</div>
 	<div class="row">
-		<div class="span2 offset6">
-			<input type="submit" name="submit" value="Send Gift" id="button">
+		<div class="span12" style="text-align:center">
+			<div class="btn btn-primary" id="button" style="font-size: 20px;">Send gift</div>
 		</div>
 	</div>
+
+	<div class="row">
+		&nbsp;
+	</div>
+
 
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -62,17 +70,11 @@
 		});
 	});
 	</script>
-	<!--</form>-->
 
-	<div class="row" style="text-align:center">
-		<div class="span12">
-			<input type="submit" name="submit" value="Send Gift">
-		</div>
-	</div>
+
 	<div class="row" style="text-align:center">
 		<label for="comments" class="span12">Your Venmo account will get charged when your friend checks in at the venue you chose.<br>Don't worry - if your friend never checks in there, you don't have to pay!</label>
 	</div>
-	</form>
 	
 	<div class="row" id="spacer100">
 	</div>

@@ -32,7 +32,7 @@
 			<input type="text" name="venue_name" id="venue_name" class="input-block-level" placeholder="Venue name (Starbucks; Philly cheesesteaks...)">
 		</div>
 		<div class="span3">
-			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area (New York; Chicago, IL...)">
+			<input type="text" name="geocode" id="geocode" class="input-block-level" placeholder="City or area (Chicago, IL; 90210...)">
 		</div>
 		<div class="span2">
 			<button class="btn btn-primary" type="submit" id="finditbutton">Find it!</button>
@@ -41,7 +41,7 @@
 	<!-- search results -->
 	<div class="row">
 		<div class="span6">
-			<div class="error-holder">
+			<div class="error-holder alert alert-error">
 			</div>
 			<div class="data-holder">
 				<span style="color: #ccc">Search for something!</span>
@@ -66,13 +66,17 @@
 		$("#finditbutton").click(function(){
 		
 			//error checking first - must have venue name and geocode
+			$(".error-holder").css("display","none	");
 			var error = "";
 			if($("#venue_name").val() == "")
 				error += "Please give part of a venue name so we can search for you.<br>";
 			if($("#geocode").val() == "")
-				error += "Please give an area within which to search (e.g. New York or 90210 or Chicago, IL).";
+				error += "Please give an area within which to search.";
 			//set error to hold either "" or new error(s)
 			$(".error-holder").html(error);
+			if(error != ""){
+				$(".error-holder").css("display","block");
+			}
 			
 			var dataHTML = "";
 			$(".data-holder").html(dataHTML);

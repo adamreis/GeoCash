@@ -4,7 +4,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="/twitter-bootstrap/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	
 	<title>GeoCash</title>
 
 	<!-- include Leaflet CSS and JavaScript files -->
@@ -27,6 +29,17 @@
 
 	<!-- area for user input -->
 	<div class="row" style="text-align: center;">
+	<div class="alert alert-info"><a class="close" data-dismiss="alert">x</a>
+	<script text="type/javascript">
+	$(document).ready(function(){
+		//alert("ready!");
+		$(".alert").click(function(){
+			$(".alert").css("display","none");
+		});
+	});
+	</script>
+	<strong>Woohoo!</strong>&nbsp;You sent a payment. How about another one?
+	</div>
 		<!--<div class="span5">
 			<input type="text" name="friend_name" id="friend_name" class="input-block-level" placeholder="Your friend's name">
 		</div>
@@ -51,7 +64,6 @@
 				{% endfor %}
 		</div>
 
-		</div>
 	</div>
 	
 	<div class="row" id="spacer100">
@@ -69,7 +81,8 @@
 		</div>
 	</div>
 </div> <!-- /container -->
-
+<script src="twitter-bootstrap-v2/docs/assets/js/jquery.js"></script>
+<script src="twitter-bootstrap-v2/docs/assets/js/bootstrap-alert.js"></script>
 </body>
 
 </html>
