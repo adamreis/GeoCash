@@ -45,12 +45,13 @@
 
 	<script type="text/javascript">
 	$(document).ready(function(){
-		alert("READY!");
+		//alert("READY!");
 		$("#button").click(function(){
-			$.post("/add_pending_payment/",function(note,amount){
-    		alert("Note: " + $("#message").val() + "\nAmount: " + $("#pay_amt").val());
-  			});
-  			window.location = "http://geocash.herokuapp.com/add_pending_payment/";
+			var message = $("#message").val();
+			var amount = $("#pay_amt").val());
+			var new_url = "http://geocash.herokuapp.com/add_pending_payment?note=" + message + "&amount=" + amount;
+			alert(new_url);
+			window.location = new_url;
 		});
 	});
 	</script>
