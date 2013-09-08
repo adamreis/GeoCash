@@ -93,13 +93,16 @@
 
 							//create parray that will hold lat/lng pairs
 							var LatLngArray = new Array();
-
+							var current_url = document.URL;
+							var next_page_base_url = current_url.replace("pick-venue", "create-payment");
+							
 							for(var i=0; i<obj.response.venues.length; i++){
 								//get the ith venue from the JSON response
 								var venue = obj.response.venues[i];
-
+								
 								//build the search results
-								dataHTML += "<a href=\"create-payment.html?venue_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
+								dataHTML += "<a href=\"" + next_page_base_url;
+								dataHTML +="&venue_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
 								//some venues don't have address or cross street, so avoid "undefined"
 								if(venue.location.address) {
 									dataHTML += " - " + venue.location.address;
@@ -129,7 +132,7 @@
 							map.fitBounds(LatLngArray);
 							//map.setView([10, -0.53], 13);
 							
-							//alert(document.URL);
+							alert(document.URL);
 						}
 				}); //end ajax
 			} // end of search & population (no errors to start)
