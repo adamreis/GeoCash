@@ -38,53 +38,16 @@
 			</div>
 			<div class="data-holder">
 			</div>
-		<!-- custom javascript to dynamically populate search results -->
-		<script type="text/javascript">
-		//On document ready, wait for button click
-		$(document).ready(function(){
-		//when submit button is clicked, begin error checking and searching
-		$("#finditbutton").click(function(){
-		
-			//error checking first - must have venue name and geocode
-			var error = "";
-			if($("#friend_name").val() == "")
-				error += "Please give your friend's name so we can search.<br>";
-			//set error to hold either "" or new error(s)
-			$(".error-holder").html(error);
+				{% if not len(friends) %} 
+					Sorry, we couldn't find anything! Try searching in a broader area or with a different name.
+				{% endif %}
 
-			//if no errors, run the search and populate results
-			if(error == "") {
-				var obj = jQuery.parseJSON(data);
-				//console.log(obj);	
-				
-				//if no results, display error message
-			
-				if( !obj.response.venues[0] ) {
-					$(".data-holder").html("Sorry, we couldn't find anything! Try searching in a broader area or with a different name.");
-				}
 				//if result(s), iterate through and display
-				else {
-					//$(".data-holder").html(data);
-					//alert(obj.response.venues[0].name);
-					var dataHTML = "";
-
-					for(var i=0; i<obj.response.venues.length; i++){
-						//get the ith venue from the JSON response
-						var venue = obj.response.venues[i];
-
-						//build the search results
-						dataHTML += "<a href=\"pick-venue.html?friend_id=" + venue.id + "\"><div class=\"btn btn-select-venue\">" + venue.name;
-						dataHTML += "</div></a><br><br>";
-					
-					}
-					//set all data in search results
-					$(".data-holder").html(dataHTML);
-
-				}
-			} // end of search & population (no errors to start)
-		}); //end of click function
-		}); //end of document ready
-		</script>
+				{% for friend in friends %}
+					<a href="pick-venue.html?friend_id={{friend.id}}">
+						<div class="btn btn-select-venue">{{friend.firstName}} {{friend.lastName}}</div>
+					</a>
+				{% endfor %}
 		</div>
 
 		</div>

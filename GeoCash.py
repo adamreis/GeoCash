@@ -4,6 +4,7 @@ from pymongo import Connection
 import requests
 import urllib
 import os
+from jinja import Template, Context, FileSystemLoader
 
 app = Flask(__name__)
 
@@ -103,8 +104,12 @@ def home():
 		return render_template('venmo-login.html', venmo_auth_url=url)
 
 	friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
+	friends = friends.json()['response']['friends']['items']
 
-	return str(friends.json()['response']['friends']['items'])
+	t = Template('pick-friend.html', FileSystemLoader('templates/'))
+	c = Context({'friends':friends})
+
+	return t.render(c)
 	# return render_template('pick-friend.html')
 
 @app.route('/venmoauth/', methods=['GET'])
