@@ -9,21 +9,33 @@
 <body>
 <!-- content container -->
 
+<div class="row" id="topnavbar">
+	<div id="logo">
+		<a href="http://geoca.sh/"><img src="../static/images/logo.png" /></a>
+	</div>
+	<div id="logout">
+		<a href="http://geoca.sh/logout/"><div class="btn btn-primary">Log out</div></a>
+	</div>
+</div>
 <div class="container" id="content-container">
+
 	<div class="row">
-		<!--<div class="span6 hidden-phone" id="screenshot">
-			[insert screenshot]
-		</div>-->
 		<div class="span6 offset3" id="homepage-logo">
-			<img src="../static/images/logo.png" style="padding: 10px;"/>
-			<h1>Share money with friends at your favorite places.</h1>
-			<br>
-			<h3 style="line-height:30px;">It's easy - sign in with your Foursquare account to begin.</h3>
-			<br>
-			<a href={{foursquare_auth_url}}>
-				<div class="btn btn-large btn-primary" id="btn-signin">Sign in with Foursquare</div>
-			</a>
-			<p style="padding-top: 10px;">*We never post without your permission - <a href="faq.html" target="_blank">learn more about how GeoCash works</a>.</p>.
+			
+			<h1>How does this work?</h1><br>
+			<h3 style="line-height:30px;">1. Sign in with Foursquare.</h3>
+			<p style="padding-bottom: 20px;">This allows you to find your friends and your favorite locations through GeoCash. 
+			We're not going to post anything without your permission, and your information is safe with us!</p>
+			
+			<h3 style="line-height:30px;">2. Leave money for a friend.</h3>
+			<p style="padding-bottom: 20px;">Using our simple 3-step app, you can leave a gift for a Foursquare friend at a location of your choosing. 
+			We use Venmo to help set up a secure transaction, and SendGrid helps us tell your friend about their gift.
+			</p>
+			
+			<h3 style="line-height:30px;">3. Your friend checks in on Foursquare.</h3>
+			<p style="padding-bottom: 20px;">Your Foursquare friend doesn't have to have a Venmo account - we'll take care of all the details to make sure your gift gets through.</p>
+			
+			<h3 style="line-height:30px;">4. Repeat!</h3>
 
 		</div>
 	</div>
