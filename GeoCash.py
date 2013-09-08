@@ -5,6 +5,8 @@ import requests
 import urllib
 import os
 # from jinja import Template, Context, FileSystemLoader
+from jinja2 import Environment, PackageLoader
+env = Environment(loader=PackageLoader('GeoCash', 'templates'))
 
 app = Flask(__name__)
 
@@ -111,6 +113,8 @@ def home():
 	# c = Context({'friends':friends})
 	# print 'test point 3'
 	# return t.render(c)
+	template = env.get_template('pick-friend.html')
+	# return template.render(friends=friends)
 	return str(friends)	
 	# return render_template('pick-friend.html',friends=friends)
 
