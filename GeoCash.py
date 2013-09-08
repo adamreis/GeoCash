@@ -68,6 +68,8 @@ def new_user():
 	# return foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907'
 
 	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
+	print "FIND NAME:"
+	print response['response']['user']
 	user_id = response['response']['user']['id']
 
 	session['4sqid']=user_id
@@ -95,6 +97,9 @@ def home():
 
 	if '4sqid' not in session:
 		return redirect(url_for('index'))
+
+	# if 'user_name' not in session:
+
 
 	#if venmo isn't connected
 	if not user_collection.find_one({'4sq_id':session['4sqid']})['venmo_id']:
