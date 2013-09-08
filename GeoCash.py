@@ -150,11 +150,14 @@ def add_venue():
 
 @app.route('/add_pending_payment/', methods=['GET'])
 def add_pending_payment():
-	print 'test point 000'
+	
 	note = request.args.get('note', '')
-	print 'test point 000.1'
+	
 	amount = request.args.get('amount', '')
 	print 'test point 000.2'
+	
+	print 'NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
+
 	pending_payment = {'recipient_id':session['friend_4sq_id'], 
 						  'sender_id':session['4sq_id'],
 						   'venue_id': session['chosen_venue'],
@@ -172,7 +175,7 @@ def add_pending_payment():
 	session.pop('user_name', None)
 	session.pop('friend_email',None)
 	
-	payment_info ='NEW PAYMENT: '+session['friend_name']+'  '+session['friend_email']+'  '+session['chosen_venue']+'  '+note+' '+amount
+	
 	return payment_info
 
 def send_notification_email(sender_name, recipient_first_name, recipient_email, venue_id, note, amount):
