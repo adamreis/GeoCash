@@ -69,7 +69,7 @@ def new_user():
 
 	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
 	print "FIND NAME:"
-	print response['response']['user']
+	return response['response']['user']
 	user_id = response['response']['user']['id']
 
 	session['4sqid']=user_id
