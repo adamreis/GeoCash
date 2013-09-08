@@ -162,6 +162,9 @@ def add_pending_payment():
 	
 	note = request.args.get('note', '')
 	
+	print 'THIS BE MY NOTE: '+str(note)
+
+
 	amount = request.args.get('amount', '')
 
 	
