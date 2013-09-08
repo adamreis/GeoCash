@@ -303,7 +303,7 @@ def dummy_push():
 	else:
 		pass
 
-def initiate_paymennt(sender_token, recip_email, note, amount):
+def initiate_payment(sender_token, recip_email, note, amount):
 	print 'test point 1'
 	data = {
 		'access_token':sender_token,
