@@ -114,7 +114,10 @@ def add_venmo_token():
 	# return venmo_access_token_base_url+urllib.urlencode(args)
 
 	response= requests.post(venmo_access_token_base_url+urllib.urlencode(args)).json()
-	return 'access token? : '+str(response)
+	user_venmo_access_token = response['access_token']
+	venmo_user_id = response['user']['id']
+
+	return 'access token? : '+user_venmo_access_token+', venmo user id: '+venmo_user_id
 
 @app.route('/logout/', methods=['GET'])
 def logout():
