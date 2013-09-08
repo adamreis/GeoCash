@@ -285,7 +285,7 @@ def dummy_push():
 	print 'venue id: '+venue_id
 	gift_to_process = pending_gift_collection.find_one({'recipient_id':recip_id,'venue_id':venue_id})
 
-	print 'gift to process: '+gift_to_process
+	print 'gift to process: '+str(gift_to_process)
 
 def mongo_connect():
 	print 'mongo connect called'
