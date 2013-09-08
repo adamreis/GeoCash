@@ -35,9 +35,9 @@ foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_get_user_id_base_url = 'https://api.foursquare.com/v2/users/self?'
 foursq_get_friends_base_url = 'https://api.foursquare.com/v2/users/self/friends?'
 
-home_redirect_uri = 'https://geoca.sh/home/'
-new_user_redirect_uri = 'https://geoca.sh/newuser/'
-add_venmo_redirect_uri = 'https://geoca.sh/venmoauth/'
+home_redirect_uri = 'https://geocash.herokuapp.com/home/'
+new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
+add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
 venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
 venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
 
@@ -126,10 +126,11 @@ def home():
 		friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
 		friends = friends.json()['response']['friends']['items']
 
+		global did_just_finish
 		template = env.get_template('pick-friend.html')
 		if did_just_finish:
 			return template.render(friends=friends,showOrNot='block')
-			global did_just_finish
+			
 			did_just_finish = False
 		else:
 			return template.render(friends=friends,showOrNot='none')
@@ -216,7 +217,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 				Your friend %s sent you a GeoCash gift!<br>
 				It's waiting for you at %s.<br>
 				<p style="font-size:large;">%s: <b>%s</b></p>
-				Click <a target="_blank" href="http://www.geoca.sh/">here</a> to let GeoCash know
+				Click <a target="_blank" href="http://geoca.sh/">here</a> to let GeoCash know
 				when you check in at a place where a friend has left you a payment. Once
 				you check in on <a target="_blank" href="http://www.foursquare.com">Foursquare</a>, we'll
 				pass along %s's gift on <a target="_blank" href="http://www.venmo.com">
@@ -304,7 +305,8 @@ def dummy_push():
 		print 'recip 4sq token: '+recip_4sq_token
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
-		print 'test point 0.1'
+		print 'test point 0.1 (contact:)'
+		print response
 		recip_email = response['response']['user']['contact']['email']
 		print 'test point 0.2'
 		note = gift_to_process['note']
@@ -314,7 +316,7 @@ def dummy_push():
 		pending_gift_collection.remove(gift_to_process)
 		initiate_payment(sender_venmo_token, recip_email, note, amount)
 	else:
-		pass
+		return '200 okay'
 
 def initiate_payment(sender_token, recip_email, note, amount):
 	print 'test point 1'
