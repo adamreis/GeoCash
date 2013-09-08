@@ -117,7 +117,16 @@ def add_venmo_token():
 	user_venmo_access_token = response['access_token']
 	venmo_user_id = response['user']['id']
 
-	return 'access token? : '+user_venmo_access_token+', venmo user id: '+venmo_user_id
+	session['venmoid']=venmo_user_id
+	session['venmotoken']=user_venmo_access_token
+
+	user_4sq_id = session['4sqid']
+
+	user_collection.update({'4sq_id':user_4sq_id},
+				 {'$set':{'venmo_id':venmo_user_id, 
+					   'venmo_token':user_venmo_access_token}})
+
+	return redirect(url_for('home'))
 
 @app.route('/logout/', methods=['GET'])
 def logout():
