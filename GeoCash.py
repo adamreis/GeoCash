@@ -49,6 +49,7 @@ from_email = 'GetGeoCash@gmail.com'
 
 @app.route('/')
 def index():
+	print 'index'
 	if not mongo_connected:
 		mongo_connect()
 
