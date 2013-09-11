@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<title>GeoCash</title>
+</head>
+<body>
+<!-- content container -->
+
+<div class="row" id="topnavbar">
+	<div id="logo">
+		<a href="http://geocash.herokuapp.com/"><img src="../static/images/logo.png" /></a>
+	</div>
+	<div id="logout">
+		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+	</div>
+</div>
+<div class="container" id="content-container">
+	<div class="alert alert-info" style="display: {{showOrNot}}"><a class="close" data-dismiss="alert">x</a>
+	<script text="type/javascript">
+	$(document).ready(function(){
+		//alert("ready!");
+		$(".alert").click(function(){
+			$(".alert").css("display","none");
+		});
+	});
+	</script>
+	<strong>Woohoo!</strong>&nbsp;You successfully left a GeoCash gift.
+	</div>
+
+	<div class="row">
+	<div class="span8 offset2" style="text-align:center">
+		<h3 style="line-height:30px; color: #3f94d0;">
+			<br/>
+			Thank you for logging in to GeoCash!  
+			<br/> 
+			You're all set to receive gifts from our Alpha testers. 
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+		</h3>
+	</div>
+
+	<div id="homepage-logo">
+		<a href="http://geocash.herokuapp.com/mailing_list?add_email=true"><div class="btn btn-large">Email me when GeoCash opens for public Beta</div></a>
+			
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+		<a href="http://geocash.herokuapp.com/faq"<div class="btn btn-large">Learn more about how GeoCash works</a></p>.
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+	</div>
+
+	</div>
+	
+
+	<div class="row" id="spacer40">
+	</div>
+	<div class="row">
+		<div class="span12" id="powered-by">
+		<span>Powered by &nbsp;</span>
+			<a href="http://www.foursquare.com"><img src="../static/images/foursquare-logo.png" id="foursquare-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.venmo.com"><img src="../static/images/venmo_logo_blue.png" id="venmo-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.sendgrid.com"><img src="../static/images/sendgrid-logo.png" id="sendgrid-logo" /></a>
+			<span>&nbsp; &nbsp;</span>
+			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-powered-button.png" id="mongodb-logo" /></a>
+		</div>
+	</div>
+		<div class="row" id="spacer40">
+	</div>
+
+	<div class="row" style="text-align:center;">
+	<div class="span12" style="text-align:center;">
+	<style>
+		div.addthis_toolbox{
+			width: 250px;
+			margin: 0 auto;
+		}
+	</style>
+		
+		<script src="http://s7.addthis.com/js/300/addthis_widget.js" type="text/javascript"></script> 
+
+		<!-- AddThis Button BEGIN -->
+		<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+		<a class="addthis_button_facebook"></a>
+		<a class="addthis_button_email"></a>
+		<a class="addthis_button_twitter"></a>
+		<a class="addthis_button_pinterest_share"></a>
+		<a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+		</div>
+		<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-522c49f96fcb6d57"></script>
+		<!-- AddThis Button END -->
+	</div>
+	</div>
+
+	<div id="spacer40"></div>
+</div> <!-- /container -->
+
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</html>

@@ -2,35 +2,37 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from pymongo import Connection
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-# from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET 
 import requests
 import urllib
 import json
 import os
 import smtplib
-# from jinja import Template, Context, FileSystemLoader
 from jinja2 import Environment, PackageLoader
 from werkzeug import ImmutableMultiDict
-env = Environment(loader=PackageLoader('GeoCash', 'templates'))
 
+env = Environment(loader=PackageLoader('GeoCash', 'templates'))
 
 app = Flask(__name__)
 
-APP_SECRET = os.environ['APP_SECRET']
+try:
+	APP_SECRET = os.environ['APP_SECRET']
+	FOURSQUARE_CLIENT_ID = os.environ['FOURSQUARE_CLIENT_ID']
+	FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
+	VENMO_CLIENT_ID = os.environ['VENMO_CLIENT_ID']
+	VENMO_SECRET = os.environ['VENMO_SECRET']
+	MONGOHQ_USER = os.environ['MONGOHQ_USER']
+	MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
+except:
+	from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET, VENMO_CLIENT_ID,VENMO_SECRET, MONGOHQ_USER, MONGOHQ_PWD
 
-FOURSQUARE_CLIENT_ID = os.environ['FOURSQUARE_CLIENT_ID']
-FOURSQUARE_CLIENT_SECRET = os.environ['FOURSQUARE_CLIENT_SECRET']
-VENMO_CLIENT_ID = os.environ['VENMO_CLIENT_ID']
-VENMO_SECRET = os.environ['VENMO_SECRET']
-MONGOHQ_USER = os.environ['MONGOHQ_USER']
-MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
 
 did_just_finish = False
 mongo_connected = False
 user_collection = None
 pending_gift_collection = None
 
-AKS = ['66007446','38321450','17788273']
+# AKS = ['66007446','38321450','17788273']
+AKS = []
 
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
 foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
@@ -51,7 +53,7 @@ def index():
 		mongo_connect()
 
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 
 	if '4sqid' in session:
 		return redirect(url_for('home'))
@@ -69,7 +71,7 @@ def new_user():
 		mongo_connect()
 
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 
 	code = request.args.get('code', '')
 	print 'CODE: '+str(code)
@@ -119,7 +121,7 @@ def home():
 		return redirect(url_for('index'))
 
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 	# if 'user_name' not in session:
 
 
@@ -154,7 +156,7 @@ def home():
 @app.route('/add_friend',methods=['GET'])
 def add_friend():
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 
 	friend_id = request.args.get('friend_4sq_id', '')
 	friend_name = request.args.get('friend_name', '')
@@ -168,7 +170,7 @@ def add_friend():
 @app.route('/add_venue/',methods=['GET'])
 def add_venue():
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 	venue_id = request.args.get('venue_id', '')
 	session['chosen_venue']=venue_id
 	return redirect(url_for('home'))
@@ -176,7 +178,7 @@ def add_venue():
 @app.route('/add_pending_payment/', methods=['GET'])
 def add_pending_payment():
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 	
 	note = request.args.get('note', '')
 	
@@ -212,7 +214,7 @@ def add_pending_payment():
 
 def send_notification_email(sender_name, toName, recipient_email, venue_id, note, amount):
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 
 	msg = MIMEMultipart('alternative')
 	msg['Subject'] = "You've received a GeoCash from a Foursquare friend!"
@@ -266,10 +268,23 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	s.quit()
 	print 'test point 5'
 
+@app.route('/mailing_list/', methods=['GET'])
+def mailing_list_page(): 
+	add = str(request.args.get('add',''))
+
+	template = env.get_template('mailing_list.html')
+
+	if add=='true':
+		return template.render(showOrNot='block')
+	else:
+		return template.render(showOrNot='none')
+
+
+
 @app.route('/venmoauth/', methods=['GET'])
 def add_venmo_token():
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
+		return redirect(url_for('mailing_list'))
 
 	code = str(request.args.get('code', ''))
 	print 'CODE: '+code
@@ -346,8 +361,6 @@ def dummy_push():
 		return '200 okay'
 
 def initiate_payment(sender_token, recip_email, note, amount):
-	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		return redirect(url_for('faq'))
 
 	print 'test point 1'
 	data = {
