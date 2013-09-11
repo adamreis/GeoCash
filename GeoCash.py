@@ -49,12 +49,10 @@ from_email = 'GetGeoCash@gmail.com'
 
 @app.route('/')
 def index():
-	print 'index'
 	if not mongo_connected:
 		mongo_connect()
 
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
-		print 'intruder!'
 		return redirect(url_for('mailing_list'))
 
 	if '4sqid' in session:
@@ -271,7 +269,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	print 'test point 5'
 
 @app.route('/mailing_list/', methods=['GET'])
-def mailing_list_page(): 
+def mailing_list(): 
 	add = str(request.args.get('add',''))
 
 	template = env.get_template('mailing_list.html')
