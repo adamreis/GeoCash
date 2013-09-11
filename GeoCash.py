@@ -13,7 +13,7 @@ from werkzeug import ImmutableMultiDict
 env = Environment(loader=PackageLoader('GeoCash', 'templates'))
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
+app.config['DEBUG'] = True
 
 try:
 	APP_SECRET = os.environ['APP_SECRET']
