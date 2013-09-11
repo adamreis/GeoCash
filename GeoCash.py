@@ -32,6 +32,7 @@ user_collection = None
 pending_gift_collection = None
 
 # AKS = ['66007446','38321450','17788273']
+# adam: 383...
 AKS = []
 
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
