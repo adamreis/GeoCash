@@ -275,6 +275,12 @@ def mailing_list():
 	template = env.get_template('mailing_list.html')
 
 	if add=='true':
+		# token = session['4sqtoken']
+		# response = requests.get(foursq_get_user_id_base_url+'oauth_token='+token+'&v=20130907').json()
+		# email = response['response']['user']['contact']['email']
+		cur_user = user_collection.find_one({'4sq_id':session['4sqid']})
+		user_collection.update(cur_user, {'email_me':'True'})
+
 		return template.render(showOrNot='block')
 	else:
 		return template.render(showOrNot='none')
@@ -348,7 +354,6 @@ def dummy_push():
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
 		print 'test point 0.1 (contact:)'
-		print response
 		recip_email = response['response']['user']['contact']['email']
 		print 'test point 0.2'
 		note = gift_to_process['note']
