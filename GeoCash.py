@@ -54,6 +54,7 @@ def index():
 		mongo_connect()
 
 	if ('4sqid' in session) and (session['4sqid'] not in AKS):
+		print 'intruder!'
 		return redirect(url_for('mailing_list'))
 
 	if '4sqid' in session:
