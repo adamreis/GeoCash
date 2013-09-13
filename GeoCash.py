@@ -9,6 +9,7 @@ import os
 import smtplib
 from jinja2 import Environment, PackageLoader
 from werkzeug import ImmutableMultiDict
+import pdb
 
 env = Environment(loader=PackageLoader('GeoCash', 'templates'))
 
@@ -23,8 +24,12 @@ try:
 	VENMO_SECRET = os.environ['VENMO_SECRET']
 	MONGOHQ_USER = os.environ['MONGOHQ_USER']
 	MONGOHQ_PWD = os.environ['MONGOHQ_PWD']
+	base_url = 'https://geocash.herokuapp.com'
+
 except:
+	# For local testing:
 	from geocash_constants import APP_SECRET, FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET, VENMO_CLIENT_ID,VENMO_SECRET, MONGOHQ_USER, MONGOHQ_PWD
+	base_url = 'http://www.stupid.com:5000'
 
 
 did_just_finish = False
@@ -32,19 +37,20 @@ mongo_connected = False
 user_collection = None
 pending_gift_collection = None
 
-# AKS = ['66007446','38321450','17788273']
+AKS = ['66007446','38321450','17788273']
 # adam: 383...
-AKS = []
+# AKS = []
 
 foursq_grant_access_base_url = 'https://foursquare.com/oauth2/authenticate?'
 foursq_access_token_base_url = 'https://foursquare.com/oauth2/access_token?'
 foursq_get_user_id_base_url = 'https://api.foursquare.com/v2/users/self?'
 foursq_get_friends_base_url = 'https://api.foursquare.com/v2/users/self/friends?'
 
-home_redirect_uri = 'https://geocash.herokuapp.com/home/'
-new_user_redirect_uri = 'https://geocash.herokuapp.com/newuser/'
+new_user_redirect_uri = base_url+'/newuser/'
+home_redirect_uri = base_url+'/home/'
+
 add_venmo_redirect_uri = 'https://geocash.herokuapp.com/venmoauth/'
-venmo_grant_access_base_url = 'https://api.venmo.com/oauth/authorize?'
+
 venmo_access_token_base_url = 'https://api.venmo.com/oauth/access_token?'
 
 from_email = 'GetGeoCash@gmail.com'
@@ -65,10 +71,12 @@ def index():
 				'redirect_uri':new_user_redirect_uri}
 
 		auth_url = foursq_grant_access_base_url+urllib.urlencode(args)
-		return render_template('index.html', foursquare_auth_url=auth_url)
+		return render_template('index.html', base_url = base_url, foursquare_auth_url=auth_url)
 
 @app.route('/newuser/')
 def new_user():
+	
+
 	if not mongo_connected:
 		mongo_connect()
 
@@ -84,7 +92,6 @@ def new_user():
 		 'code':code}
 	# return foursq_access_token_base_url+urllib.urlencode(args)
 	user_access_token = requests.get(foursq_access_token_base_url+urllib.urlencode(args)).json()['access_token']
-	
 	print 'ACCESS TOKEN: '+user_access_token
 	# return foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907'
 
@@ -99,7 +106,7 @@ def new_user():
 	session['4sqtoken']=user_access_token
 	session['user_name']=firstname+''+lastname
 	print 'Logged in!'
-	
+
 	existing_user = user_collection.find_one({'4sq_id':user_id})
 	
 	if not existing_user:
@@ -134,26 +141,26 @@ def home():
 		   	   'response_type':'code'}
 
 		url = venmo_grant_access_base_url+urllib.urlencode(args)
-		return render_template('venmo-login.html', venmo_auth_url=url)
+		return render_template('venmo-login.html', base_url = base_url, venmo_auth_url=url)
 
 	if 'friend_email' not in session:
 		friends = requests.get(foursq_get_friends_base_url+'oauth_token='+session['4sqtoken']+'&v=20130907')
 		friends = friends.json()['response']['friends']['items']
-
+		# pdb.set_trace()
 		global did_just_finish
 		template = env.get_template('pick-friend.html')
 		if did_just_finish:
-			return template.render(friends=friends,showOrNot='block')
+			return template.render(base_url=base_url, friends=friends, showOrNot='block')
 			
 			did_just_finish = False
 		else:
-			return template.render(friends=friends,showOrNot='none')
+			return template.render(base_url=base_url, friends=friends,showOrNot='none')
 	
 	elif 'chosen_venue' not in session:
-		return render_template('pick-venue.html')
+		return render_template('pick-venue.html', base_url=base_url)
 
 	else:
-		return render_template('create-payment.html')
+		return render_template('create-payment.html', base_url=base_url)
 
 @app.route('/add_friend',methods=['GET'])
 def add_friend():
@@ -163,6 +170,8 @@ def add_friend():
 	friend_id = request.args.get('friend_4sq_id', '')
 	friend_name = request.args.get('friend_name', '')
 	friend_email = request.args.get('friend_email','')
+
+	# pdb.set_trace()
 
 	session['friend_4sq_id']=friend_id
 	session['friend_name']=friend_name
@@ -265,6 +274,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	s = smtplib.SMTP('smtp.sendgrid.net', 587)
 	s.login(username, password)
 	print 'test point 3'
+
 	s.sendmail(from_email, recipient_email, msg.as_string())
 	print 'test point 4'
 	s.quit()
@@ -278,9 +288,9 @@ def mailing_list():
 
 	if add=='true':
 		user_collection.update({'4sq_id':session['4sqid']},{'$set':{'email_me':'True'}})
-		return template.render(showOrNot='block')
+		return template.render(base_url=base_url, showOrNot='block')
 	else:
-		return template.render(showOrNot='none')
+		return template.render(base_url=base_url, showOrNot='none')
 
 
 

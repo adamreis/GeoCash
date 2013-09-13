@@ -17,10 +17,10 @@
 <body>
 <div class="row" id="topnavbar">
 	<div id="logo">
-		<a href="http://geocash.herokuapp.com/"><img src="../static/images/logo.png" /></a>
+		<a href="{{base_url}}"><img src="../static/images/logo.png" /></a>
 	</div>
 	<div id="logout">
-		<a href="http://geocash.herokuapp.com/logout/"><div class="btn btn-primary">Log out</div></a>
+		<a href="{{base_url}}/logout/"><div class="btn btn-primary">Log out</div></a>
 	</div>
 </div>
 <div class="container" id="content-container">
@@ -125,7 +125,7 @@
 								var venue = obj.response.venues[i];
 								
 								//build the search results
-								dataHTML += "<a href=http://geocash.herokuapp.com/add_venue?venue_id=" + venue.id + "><div class=\"btn btn-select-venue\">" + venue.name;
+								dataHTML += "<a href={{base_url}}/add_venue?venue_id=" + venue.id + "><div class=\"btn btn-select-venue\">" + venue.name;
 								//some venues don't have address or cross street, so avoid "undefined"
 								if(venue.location.address) {
 									dataHTML += " - " + venue.location.address;
