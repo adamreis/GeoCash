@@ -142,7 +142,7 @@ def home():
 					'scope':'make_payments', 
 		   	   'response_type':'code'}
 
-		url = venmo_grant_access_base_url+urllib.urlencode(args)
+		url = venmo_access_token_base_url+urllib.urlencode(args)
 		return render_template('venmo-login.html', base_url = base_url, venmo_auth_url=url)
 
 	if 'friend_email' not in session:
