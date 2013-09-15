@@ -37,7 +37,7 @@ mongo_connected = False
 user_collection = None
 pending_gift_collection = None
 
-AKS = ['66007446','38321450','17788273']
+AKS = ['66007446','38321450','17788273', '66007856']
 # adam: 383...
 # AKS = []
 
@@ -84,7 +84,7 @@ def new_user():
 		return redirect(url_for('mailing_list'))
 
 	code = request.args.get('code', '')
-	print 'CODE: '+str(code)
+
 	args = {'client_id':FOURSQUARE_CLIENT_ID, 
 		'client_secret':FOURSQUARE_CLIENT_SECRET, 
 		   'grant_type':'authorization_code', 
@@ -92,14 +92,16 @@ def new_user():
 		 'code':code}
 	# return foursq_access_token_base_url+urllib.urlencode(args)
 	user_access_token = requests.get(foursq_access_token_base_url+urllib.urlencode(args)).json()['access_token']
-	print 'ACCESS TOKEN: '+user_access_token
+
 	# return foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907'
 
 	response = requests.get(foursq_get_user_id_base_url+'oauth_token='+user_access_token+'&v=20130907').json()
 	
 	firstname =  str(response['response']['user']['firstName'])
-	lastname = str(response['response']['user']['lastName'])
-
+	try:
+		lastname = str(response['response']['user']['lastName'])
+	except:
+		lastname = ''
 	user_id = response['response']['user']['id']
 
 	session['4sqid']=user_id
@@ -209,7 +211,6 @@ def add_pending_payment():
 
 	pending_gift_collection.insert(pending_payment)
 
-	print 'test point 0'
 	send_notification_email(session['user_name'],session['friend_name'],session['friend_email'], session['chosen_venue'], note, amount)
 
 	session.pop('chosen_venue', None)
@@ -218,7 +219,6 @@ def add_pending_payment():
 	session.pop('user_name', None)
 	session.pop('friend_email',None)
 	
-	print 'test point 6'
 	global did_just_finish
 	did_just_finish = True
 	return redirect(url_for('home'))
@@ -233,7 +233,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	msg['To'] = recipient_email
 	venue_response = requests.get('https://api.foursquare.com/v2/venues/'+venue_id+'?oauth_token='+session['4sqtoken']+'&v=20130907').json()
 	venue_name = venue_response['response']['venue']['name']
-	print 'test point .9'
+
 	text = "Hi " + toName + ",\n Your \
 		friend " + sender_name + " sent you a GeoCash gift! It's waiting for you \
 		at " + venue_name + ".\n" + sender_name + ": " + note + "\n\n" + "Go to http://geoca.sh \
@@ -241,7 +241,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 		check in there.\n Authenticating will let GeoCash know when you check in at a place \
 		where a friend has left you a payment. Once you check in on Foursquare, we'll pass \
 		along " +sender_name + "'s gift on Venmo.\n"
-	print 'test point .93'
+
 	html = """\n
 		<html>
 			<head></head>
@@ -258,7 +258,7 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 			</body>
 		</html>
 		""" %(toName, sender_name, venue_name, sender_name, note, sender_name)
-	print 'test point .96'
+
 	# Login creds
 	username = 'GeoCash'
 	password = "pennappscolumbia1"
@@ -266,19 +266,19 @@ def send_notification_email(sender_name, toName, recipient_email, venue_id, note
 	# Record the MIME types of both part - text/plain and text/html
 	part1 = MIMEText(text, 'plain')
 	part2 = MIMEText(html, 'html')
-	print 'test point 1'
+
 	# Attach parts into message container
 	msg.attach(part1)
 	msg.attach(part2)
-	print 'test point 2'
+
 	s = smtplib.SMTP('smtp.sendgrid.net', 587)
 	s.login(username, password)
-	print 'test point 3'
+
 
 	s.sendmail(from_email, recipient_email, msg.as_string())
-	print 'test point 4'
+
 	s.quit()
-	print 'test point 5'
+
 
 @app.route('/mailing_list/', methods=['GET'])
 def mailing_list(): 
@@ -300,7 +300,7 @@ def add_venmo_token():
 		return redirect(url_for('mailing_list'))
 
 	code = str(request.args.get('code', ''))
-	print 'CODE: '+code
+
 
 	args = {'client_id':VENMO_CLIENT_ID, 
 		'client_secret':VENMO_SECRET, 
@@ -344,28 +344,25 @@ def faq():
 def dummy_push():
 	if not mongo_connected:
 		mongo_connect()
-
-	print 'request:'
 	recip_id = str(json.loads(request.form['user'])['id'])
 	venue_id = str(json.loads(request.form['checkin'])['venue']['id'])
-	print 'recip id: '+recip_id
-	print 'venue id: '+venue_id
+
 	gift_to_process = pending_gift_collection.find_one({'recipient_id':recip_id,'venue_id':venue_id})
 
 	if(gift_to_process):
 		sender_venmo_token = user_collection.find_one({'4sq_id':gift_to_process['sender_id']})['venmo_token']
-		print 'sender venmo token: '+str(sender_venmo_token)
+
 
 		recip_4sq_token = user_collection.find_one({'4sq_id':recip_id})['4sq_token']
-		print 'recip 4sq token: '+recip_4sq_token
+
 
 		response = requests.get(foursq_get_user_id_base_url+'oauth_token='+recip_4sq_token+'&v=20130907').json()
-		print 'test point 0.1 (contact:)'
+
 		recip_email = response['response']['user']['contact']['email']
-		print 'test point 0.2'
+
 		note = gift_to_process['note']
 		amount = gift_to_process['amount']
-		print 'test point 0.3'
+
 
 		pending_gift_collection.remove(gift_to_process)
 		initiate_payment(sender_venmo_token, recip_email, note, amount)
@@ -374,17 +371,16 @@ def dummy_push():
 
 def initiate_payment(sender_token, recip_email, note, amount):
 
-	print 'test point 1'
 	data = {
 		'access_token':sender_token,
 		'email':recip_email,
 		'note':note,
 		'amount':amount
 	}
-	print 'test point 2'
+
 	url = 'https://api.venmo.com/payments'
 	response = requests.post(url,data)
-	print 'test point 3'
+
 
 def mongo_connect():
 	print 'mongo connect called'
