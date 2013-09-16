@@ -6,15 +6,10 @@
 	<link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<title>GeoCash</title>
-
-	<!-- include Leaflet CSS and JavaScript files -->
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-	 <!--[if lte IE 8]>
-	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-	 <![endif]-->
-	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 </head>
 <body>
+<!-- content container -->
+
 <div class="row" id="topnavbar">
 	<div id="logo">
 		<a href="{{base_url}}"><img src="../static/images/logo.png" /></a>
@@ -24,60 +19,51 @@
 	</div>
 </div>
 <div class="container" id="content-container">
-	<div class="row" id="spacer40">
-	</div>
-
-	<div class="row">
-		<label for="pay_amt" class="span1 offset5" style="margin-top: 7px">Amount: $</label>
-		<div class="span1">
-			<input type="number" step=".01" value="5.00" min=".01" name="pay_amt" id="pay_amt" class="input-block-level">
-		</div>
-	</div>
-	<div class="row">
-		&nbsp;
-	</div>
-	<div class="row" style="text-align:center">
-		<label for="comments" class="span12" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Add a note to your gift!  We'll let your friend know how to claim it.</label>
-	</div>
-	<div class="row">
-		&nbsp;
-	</div>
-	<div class="row" style="text-align:center">
-		<div class="span12">
-		<textarea name="comments" id="comments" maxlength="2000" style="color:black; width: 400px; height: 60px;" placeholder=""></textarea><br />
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12" style="text-align:center">
-			<div class="btn btn-primary" id="button" style="font-size: 20px;">Send gift</div>
-		</div>
-	</div>
-
-	<div class="row">
-		&nbsp;
-	</div>
-
-
-	<script type="text/javascript">
+	<div class="alert alert-info" style="display: {{showOrNot}}"><a class="close" data-dismiss="alert">x</a>
+	<script text="type/javascript">
 	$(document).ready(function(){
-		//alert("READY!");
-		$("#button").click(function(){
-			var message = $("#comments").val();
-			//alert(message);
-			var amount = $("#pay_amt").val();
-			var new_url = "{{base_url}}/add_pending_payment?note=" + message + "&amount=" + amount;
-			//alert(new_url);
-			window.location = new_url;
+		//alert("ready!");
+		$(".alert").click(function(){
+			$(".alert").css("display","none");
 		});
 	});
 	</script>
+		Your email has been saved -- we'll get in touch when we're ready for new users! 
+	</div>
 
+	<div class="row">
+	<div class="span8 offset2" style="text-align:center">
+		<h3 style="line-height:30px; color: #3f94d0;">
+			<br/>
+			Thank you for logging in to GeoCash!  
+			<br/> 
+			You're all set to receive gifts from our Alpha testers. 
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+		</h3>
+	</div>
 
-	<div class="row" style="text-align:center">
-		<label for="comments" class="span12">Your Venmo account will get charged when your friend checks in at the venue you chose.<br>Don't worry - if your friend never checks in there, you don't have to pay!</label>
+	<div id="homepage-logo">
+		<a href="{{base_url}}/mailing_list?add=true"><div class="btn btn-large">Email me when GeoCash opens for public Beta</div></a>
+			
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+		<a href="{{base_url}}/faq"<div class="btn btn-large">Learn more about how GeoCash works</a></p>.
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+	</div>
+
 	</div>
 	
-	<div class="row" id="spacer100">
+
+	<div class="row" id="spacer40">
 	</div>
 	<div class="row">
 		<div class="span12" id="powered-by">
@@ -91,7 +77,7 @@
 			<a href="http://www.mongodb.org"><img src="../static/images/mongodb-powered-button.png" id="mongodb-logo" /></a>
 		</div>
 	</div>
-	<div class="row" id="spacer40">
+		<div class="row" id="spacer40">
 	</div>
 
 	<div class="row" style="text-align:center;">
@@ -123,5 +109,5 @@
 </div> <!-- /container -->
 
 </body>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </html>
