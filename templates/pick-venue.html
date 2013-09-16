@@ -50,6 +50,9 @@
 		<script type="text/javascript">
 		//On document ready, wait for button click
 		$(document).ready(function(){
+
+			var MarkerArray = new Array(); //to make removal of markers from map possible
+
 			//allow user to hit enter from either text box
 			$("#geocode").keyup(function(event){
 				if(event.keyCode == 13) {
@@ -115,10 +118,18 @@
 							//alert(obj.response.venues[0].name);
 							var dataHTML = "";
 
-							//create parray that will hold lat/lng pairs
+							//create array that will hold lat/lng pairs
 							var LatLngArray = new Array();
 							var current_url = document.URL;
 							var next_page_base_url = current_url.replace("pick-venue", "create-payment");
+
+							//removes markers from previous search
+							if(MarkerArray.length>0){
+								size = MarkerArray.length;
+								for(i=0; i<size; i++){
+									map.removeLayer(MarkerArray[i])
+								}
+							}
 							
 							for(var i=0; i<obj.response.venues.length; i++){
 								//get the ith venue from the JSON response
@@ -143,8 +154,11 @@
 								var locationAddress = "";
 								if(venue.location.address){
 									locationAddress = venue.location.address;
-								}	
-								L.marker([lat, lng]).addTo(map).bindPopup("<b>" + venue.name + "</b><br/>" + locationAddress);
+								}
+								var marker = L.marker([lat,lng]);	
+								//marker.addTo(map).bindPopup("<b>" + venue.name + "</b><br/>" + locationAddress);
+								map.addLayer(marker);
+								MarkerArray.push(marker);
 
 								
 							}
@@ -183,13 +197,9 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(map);
 
-		//Not a mistake - just for fun
-		L.marker([51.5, -0.09]).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.");
+		/*var popup = L.popup();
 
-		var popup = L.popup();
-
-		/*function onMapClick(e) {
+		function onMapClick(e) {
 			popup
 				.setLatLng(e.latlng)
 				.setContent("You clicked the map at " + e.latlng.toString())
